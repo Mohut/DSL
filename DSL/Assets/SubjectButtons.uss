@@ -1,0 +1,28 @@
+.Button {
+    height: 15%;
+    width: 70%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.unity-base-field__input {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(108, 86, 86, 255);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    flex-shrink: 1;
+    justify-content: flex-start;
+    font-size: 17px;
+    -unity-text-align: middle-center;
+}
+
+.unity-text-field__label {
+    width: 0;
+    font-size: 0;
+    height: 0;
+}
