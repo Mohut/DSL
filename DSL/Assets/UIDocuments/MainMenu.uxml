@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Root" style="width: 100%; height: 100%; background-color: rgb(173, 4, 112);">
+        <ui:VisualElement name="UpperPart" style="height: 50%; width: 100%;">
+            <ui:Label text="Social&#10;Experience" display-tooltip-when-elided="true" name="Title" style="width: 100%; height: 100%; font-size: 50%; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="LowerPart" style="height: 50%; width: 100%; flex-direction: row; align-items: center; justify-content: center;">
+            <ui:Button text="Lernmodus" display-tooltip-when-elided="true" name="Learn" style="width: 30%; height: 50%; background-color: rgb(230, 230, 230); border-top-left-radius: 25px; border-bottom-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; color: rgb(0, 0, 0); font-size: 20px; white-space: nowrap;" />
+            <ui:Button text="Quizmodus" display-tooltip-when-elided="true" name="Quiz" style="width: 30%; height: 50%; background-color: rgb(230, 230, 230); border-top-left-radius: 25px; border-bottom-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; font-size: 20px; color: rgb(0, 0, 0);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
