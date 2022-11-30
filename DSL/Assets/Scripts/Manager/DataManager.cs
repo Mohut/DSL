@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
     #region Attributes
+    public string saveFile = "/groupdata.json";
+
     private List<Station> _stations = new();
     private List<Question> _questions = new();
     private List<Answer> _answers = new();
@@ -14,6 +17,8 @@ public class DataManager : MonoBehaviour
 
     // bool to check if we need to rewrite the group file
     private bool _isGroupFileDirty;
+    private GroupData groupData;
+    private Group currentGroup;
 
     private static DataManager s_instance;
     #endregion
@@ -26,6 +31,7 @@ public class DataManager : MonoBehaviour
     public List<Answer> Answers { get => _answers; private set => _answers = value; }
     public List<Hint> Hints { get => _hints; private set => _hints = value; }
     public List<Group> Groups { get => _groups; private set => _groups = value; }
+    public Group CurrentGroup { get => currentGroup; private set => currentGroup = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -41,19 +47,30 @@ public class DataManager : MonoBehaviour
             s_instance = this;
         }
 
+        groupData = new GroupData();
+        saveFile = Application.persistentDataPath + saveFile;
         DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
         CreateTestData();
+        ReadFile();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F1))
+        {
+            AddNewGroup("Isolde´s Gang");
+        }
     }
 
     private void OnApplicationQuit()
     {
         if (_isGroupFileDirty)
         {
-            WriteGroupFile(Groups);
+            WriteFile();
         }
     }
     #endregion
@@ -64,19 +81,38 @@ public class DataManager : MonoBehaviour
         Group group = new();
         group.name = name;
         group.points = 0;
-        Groups.Add(group);
+        groupData.groupData.Add(group);
         _isGroupFileDirty = true;
     }
 
-    private void WriteGroupFile(List<Group> groups)
+    public void ReadFile()
     {
-        
+        // Does the file exist?
+        if (File.Exists(saveFile))
+        {
+            // Read the entire file and save its contents.
+            string fileContents = File.ReadAllText(saveFile);
+
+            // Deserialize the JSON data 
+            //  into a pattern matching the GameData class.
+            groupData = JsonUtility.FromJson<GroupData>(fileContents);
+        }
     }
 
-    #endregion
+    public void WriteFile()
+    {
+        // Serialize the object into JSON and save string.
+        string jsonString = JsonUtility.ToJson(groupData);
 
-    #region Testing Functions
-    private void CreateTestData()
+        // Write JSON to file.
+        File.WriteAllText(saveFile, jsonString);
+        Debug.Log("Saved File as: " + saveFile);
+    }
+
+#endregion
+
+#region Testing Functions
+private void CreateTestData()
     {
         Station station1 = new Station();
         station1.id = 0;
@@ -202,4 +238,5 @@ public class DataManager : MonoBehaviour
     }
 
     #endregion
+
 }

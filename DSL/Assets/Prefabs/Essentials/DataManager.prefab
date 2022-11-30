@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cadbee42b404b0a4f83d0aaec852b121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveFile: /groupdata.json
