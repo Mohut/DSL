@@ -7,7 +7,12 @@ using UnityEngine;
 public class DataManager : MonoBehaviour
 {
     #region Attributes
+    [Header("Options")]
     public string saveFile = "/groupdata.json";
+
+    public event Action OnGroupDataLoaded;
+    public event Action<Group> OnNewGroupCreated;
+    public event Action OnStationsLoaded;
 
     private List<Station> _stations = new();
     private List<Question> _questions = new();
@@ -76,16 +81,18 @@ public class DataManager : MonoBehaviour
     #endregion
 
     #region Group Functions
-    public void AddNewGroup(string name)
+    public Group AddNewGroup(string name)
     {
-        Group group = new();
+        Group group = new Group(name, 0);
         group.name = name;
         group.points = 0;
         groupData.groupData.Add(group);
         _isGroupFileDirty = true;
+        OnNewGroupCreated?.Invoke(group);
+        return group;
     }
 
-    public void ReadFile()
+    private void ReadFile()
     {
         // Does the file exist?
         if (File.Exists(saveFile))
@@ -96,10 +103,11 @@ public class DataManager : MonoBehaviour
             // Deserialize the JSON data 
             //  into a pattern matching the GameData class.
             groupData = JsonUtility.FromJson<GroupData>(fileContents);
+            OnGroupDataLoaded?.Invoke();
         }
     }
 
-    public void WriteFile()
+    private void WriteFile()
     {
         // Serialize the object into JSON and save string.
         string jsonString = JsonUtility.ToJson(groupData);
@@ -109,10 +117,37 @@ public class DataManager : MonoBehaviour
         Debug.Log("Saved File as: " + saveFile);
     }
 
-#endregion
+    #endregion
 
-#region Testing Functions
-private void CreateTestData()
+    #region Get Data Functions#
+    public Question GetQuestionById(int id)
+    {
+        return Questions.Find(x => x.id == id);
+    }
+
+    public List<Answer> GetAnswersById(List<int> idList)
+    {
+        List<Answer> answers = new List<Answer>();
+
+        foreach (Answer answer in Answers)
+        {
+            if(idList.Contains(answer.id))
+            {
+                answers.Add(answer);
+            }
+        }
+
+        return answers;
+    }
+
+    public Hint GetHintById(int id)
+    {
+        return Hints.Find(x => x.id == id);
+    }
+    #endregion
+
+    #region Testing Functions
+    private void CreateTestData()
     {
         Station station1 = new Station();
         station1.id = 0;
@@ -235,6 +270,8 @@ private void CreateTestData()
         Hints.Add(hint2);
         Hints.Add(hint3);
         Hints.Add(hint4);
+
+        OnStationsLoaded?.Invoke();
     }
 
     #endregion
