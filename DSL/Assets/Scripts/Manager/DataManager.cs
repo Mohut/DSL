@@ -67,7 +67,7 @@ public class DataManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            AddNewGroup("Isolde´s Gang");
+            AddNewGroup("Isoldeï¿½s Gang");
         }
     }
 
@@ -151,7 +151,7 @@ public class DataManager : MonoBehaviour
     {
         Station station1 = new Station();
         station1.id = 0;
-        station1.name = "Privatssphäre Station";
+        station1.name = "Privatssphï¿½re Station";
         station1.time = 20;
         station1.questionId = new int[2]{ 0, 1 };
 

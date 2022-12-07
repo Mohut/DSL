@@ -1,28 +1,28 @@
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public static class SceneManager
 {
-    public void LoadEndScreen()
+    public static void LoadEndScreen()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("EndScreen");
     }
 
-    public void LoadHighscoreScreen()
+    public static void LoadHighscoreScreen()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("HighscoreList");
     }
 
-    public void LoadMainMenu()
+    public static void LoadMainMenu()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 
-    public void LoadQuestionScreen()
+    public static void LoadQuestionScreen()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("QuestionScreen");
     }
 
-    public void LoadSubjectScreen()
+    public static void LoadSubjectScreen()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("SubjectMenu");
     }
