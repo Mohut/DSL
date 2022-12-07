@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,29 +25,31 @@ public class SubjectButton : MonoBehaviour
 
         button2.onClick.AddListener(() =>
         {
-            DataManager.Instance.AddNewGroup(inputField.text);
             GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[1]);
+            DataManager.Instance.AddNewGroup(inputField.text);
             SceneManager.LoadQuestionScreen();
         });
 
         button3.onClick.AddListener(() =>
         {
-            DataManager.Instance.AddNewGroup(inputField.text);
             GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[2]);
+            DataManager.Instance.AddNewGroup(inputField.text);
             SceneManager.LoadQuestionScreen();
         });
 
         button4.onClick.AddListener(() =>
         {
-            DataManager.Instance.AddNewGroup(inputField.text);
+            
             GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[3]);
+            DataManager.Instance.AddNewGroup(inputField.text);
             SceneManager.LoadQuestionScreen();
         });
         
         button5.onClick.AddListener(() =>
         {
-            DataManager.Instance.AddNewGroup(inputField.text);
+            
             GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[4]);
+            DataManager.Instance.AddNewGroup(inputField.text);
             SceneManager.LoadQuestionScreen();
         });
     }

@@ -71,9 +71,14 @@ public class GameManager : MonoBehaviour
         PayedForHint = false;
     }
 
-    public void SetNextQuestion()
+    // Selects the next question and returns if there is a new one
+    public bool SetNextQuestion()
     {
         QuestionIteration += 1;
+
+        if (CurrentStation.questionId.Length <= QuestionIteration)
+            return false;
+        
         Question nextQuestion = DataManager.Instance.GetQuestionById(CurrentStation.questionId[QuestionIteration]);
 
         if (nextQuestion != null)
@@ -83,6 +88,8 @@ public class GameManager : MonoBehaviour
             CurrentHint = DataManager.Instance.GetHintById(CurrentQuestion.hintId);
             PayedForHint = false;
         }
+
+        return true;
     }
 
     public void CheckAnswer(Answer answer)

@@ -290,19 +290,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 72042497}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
-        m_MethodName: LoadEndScreen
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &72042497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +487,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groupName: {fileID: 1264149352}
+  task: {fileID: 672714734}
+  subject: {fileID: 847850729}
+  time: {fileID: 1616875288}
+  question: {fileID: 1753108150}
+  answer1: {fileID: 434340626}
+  answer2: {fileID: 441405204}
+  answer3: {fileID: 1367156582}
+  answer4: {fileID: 1472805481}
+  button1: {fileID: 1195983719}
+  button2: {fileID: 555603538}
+  button3: {fileID: 72042496}
+  button4: {fileID: 242656234}
 --- !u!1 &235597187
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,19 +715,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 242656235}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
-        m_MethodName: LoadEndScreen
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &242656235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1252,19 +1240,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 555603539}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
-        m_MethodName: LoadEndScreen
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &555603539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2604,19 +2580,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1195983720}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
-        m_MethodName: LoadEndScreen
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1195983720
 MonoBehaviour:
   m_ObjectHideFlags: 0
