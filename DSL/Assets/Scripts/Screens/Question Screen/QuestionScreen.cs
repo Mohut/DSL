@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class QuestionScreen : MonoBehaviour
 {
     [SerializeField] private Slider slider;
+    [SerializeField] private TipScreen tipScreen;
 
     [Header("Textfields")]
     [SerializeField] private TextMeshProUGUI groupName;
@@ -28,9 +29,11 @@ public class QuestionScreen : MonoBehaviour
 
     private float time;
     private int currentQuestionCount = 1 ;
-    private int currentScore = 0;
     void Start()
     {
+        GameManager.Instance.ResetScore();
+        GameManager.Instance.ResetUsedTips();
+        
         groupName.text = GameManager.Instance.CurrentGroup.name;
         subject.text = GameManager.Instance.CurrentStation.name;
         question.text = GameManager.Instance.CurrentQuestion.text;
@@ -41,7 +44,7 @@ public class QuestionScreen : MonoBehaviour
 
         time = GameManager.Instance.CurrentStation.time;
         
-        SetAnswerText();
+        SetAnswerQuestionText();
         SetButtonMethods();
     }
 
@@ -60,8 +63,10 @@ public class QuestionScreen : MonoBehaviour
         timeText.text = (int)time + " Min.";
     }
 
-    private void SetAnswerText()
+    private void SetAnswerQuestionText()
     {
+        question.text = GameManager.Instance.CurrentQuestion.text;
+        
         if(GameManager.Instance.CurrentAnswers.Count >= 1)
             answer1.text = GameManager.Instance.CurrentAnswers[0].text;
         if(GameManager.Instance.CurrentAnswers.Count >= 2)
@@ -76,8 +81,8 @@ public class QuestionScreen : MonoBehaviour
     {
         if (GameManager.Instance.CurrentAnswers[index].isCorrect)
         {
-            currentScore += GameManager.Instance.CurrentQuestion.points;
-            currentScoreText.text = "Score: " + currentScore.ToString();
+            GameManager.Instance.CurrentScore += GameManager.Instance.CurrentQuestion.points;
+            currentScoreText.text = "Score: " + GameManager.Instance.CurrentScore;
         }
     }
 
@@ -102,31 +107,35 @@ public class QuestionScreen : MonoBehaviour
         {
             CheckAnswer(0);
             LoadNewQuestion();
-            SetAnswerText();
+            SetAnswerQuestionText();
             UpdateCurrentQuestionData();
+            tipScreen.ResetTip();
         });
         
         button2.onClick.AddListener( () => {
             CheckAnswer(1);
             LoadNewQuestion();
-            SetAnswerText();
+            SetAnswerQuestionText();
             UpdateCurrentQuestionData();
+            tipScreen.ResetTip();
         });
         
         button3.onClick.AddListener(() =>
         {
             CheckAnswer(2);
             LoadNewQuestion();
-            SetAnswerText();
+            SetAnswerQuestionText();
             UpdateCurrentQuestionData();
+            tipScreen.ResetTip();
         });
         
         button4.onClick.AddListener(() =>
         {
             CheckAnswer(3);
             LoadNewQuestion();
-            SetAnswerText();
+            SetAnswerQuestionText();
             UpdateCurrentQuestionData();
+            tipScreen.ResetTip();
         });
     }
 }

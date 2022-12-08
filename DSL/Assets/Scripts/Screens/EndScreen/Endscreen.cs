@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Endscreen : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private TextMeshProUGUI groupName;
+    [SerializeField] private TextMeshProUGUI points;
+    [SerializeField] private TextMeshProUGUI tipps;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        groupName.text = GameManager.Instance.CurrentGroup.name;
+        points.text = "Punkte: " + GameManager.Instance.CurrentScore;
+        tipps.text = "Tipps: " + GameManager.Instance.UsedTips;
     }
 }

@@ -831,6 +831,7 @@ GameObject:
   - component: {fileID: 405861193}
   - component: {fileID: 405861192}
   - component: {fileID: 405861191}
+  - component: {fileID: 405861195}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -924,6 +925,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &405861195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405861190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c264e54e2fdcd143a76dde3ef64313e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: {fileID: 1327764911}
+  points: {fileID: 303621076}
+  tipps: {fileID: 973319538}
 --- !u!224 &515485190 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5645562347676500228, guid: 6fe872eaf802b6b408fd6d5254eb0a8e, type: 3}
@@ -2113,8 +2129,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 944798597}
   m_HandleRect: {fileID: 944798596}
   m_Direction: 2
-  m_Value: -0.00003272096
-  m_Size: 0.8971101
+  m_Value: -0.0000010555148
+  m_Size: 0.90273404
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2410,7 +2426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 28.913456}
+  m_AnchoredPosition: {x: 0, y: 28.912537}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2105566099

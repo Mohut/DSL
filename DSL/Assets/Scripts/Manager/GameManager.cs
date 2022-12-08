@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private Hint _currentHint;
     private Group _currentGroup;
 
+    private int _currentScore;
+    private int _usedTips;
     private int _questionIteration;
     private bool _payedForHint;
     #endregion
@@ -25,6 +27,9 @@ public class GameManager : MonoBehaviour
     public int QuestionIteration { get => _questionIteration; set => _questionIteration = value; }
     public Group CurrentGroup { get => _currentGroup; set => _currentGroup = value; }
     public bool PayedForHint { get => _payedForHint; set => _payedForHint = value; }
+    public int CurrentScore { get => _currentScore; set => _currentScore = value; }
+    public int UsedTips { get => _usedTips; set => _usedTips = value; }
+
     #endregion
 
     #region Monobehavior Functions
@@ -112,5 +117,15 @@ public class GameManager : MonoBehaviour
             CurrentGroup.points -= CurrentHint.price;
             PayedForHint = true;
         }
+    }
+
+    public void ResetScore()
+    {
+        _currentScore = 0;
+    }
+
+    public void ResetUsedTips()
+    {
+        _usedTips = 0;
     }
 }
