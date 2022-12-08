@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +12,7 @@ public class SubjectButton : MonoBehaviour
     [SerializeField] private Button button3;
     [SerializeField] private Button button4;
     [SerializeField] private Button button5;
+    [SerializeField] private Button homebutton;
 
     private void Start()
     {
@@ -52,6 +52,8 @@ public class SubjectButton : MonoBehaviour
             DataManager.Instance.AddNewGroup(inputField.text);
             SceneManager.LoadQuestionScreen();
         });
+        
+        homebutton.onClick.AddListener(SceneManager.LoadMainMenu);
     }
 
     private void OnDisable()
@@ -61,6 +63,7 @@ public class SubjectButton : MonoBehaviour
         button3.onClick.RemoveAllListeners();
         button4.onClick.RemoveAllListeners();
         button5.onClick.RemoveAllListeners();
+        homebutton.onClick.RemoveAllListeners();
     }
 
     // Update is called once per frame

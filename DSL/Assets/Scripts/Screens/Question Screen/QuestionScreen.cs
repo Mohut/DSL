@@ -4,12 +4,16 @@ using UnityEngine.UI;
 
 public class QuestionScreen : MonoBehaviour
 {
+    [SerializeField] private Slider slider;
+
     [Header("Textfields")]
     [SerializeField] private TextMeshProUGUI groupName;
     [SerializeField] private TextMeshProUGUI task;
     [SerializeField] private TextMeshProUGUI subject;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private TextMeshProUGUI question;
+    [SerializeField] private TextMeshProUGUI questionPoints;
+    [SerializeField] private TextMeshProUGUI currentScoreText;
     [SerializeField] private TextMeshProUGUI answer1;
     [SerializeField] private TextMeshProUGUI answer2;
     [SerializeField] private TextMeshProUGUI answer3;
@@ -20,17 +24,40 @@ public class QuestionScreen : MonoBehaviour
     [SerializeField] private Button button2;
     [SerializeField] private Button button3;
     [SerializeField] private Button button4;
+    [SerializeField] private Button homeButton;
 
     private float time;
-    
+    private int currentQuestionCount = 1 ;
+    private int currentScore = 0;
     void Start()
     {
         groupName.text = GameManager.Instance.CurrentGroup.name;
         subject.text = GameManager.Instance.CurrentStation.name;
         question.text = GameManager.Instance.CurrentQuestion.text;
+        task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Length;
+        questionPoints.text = GameManager.Instance.CurrentQuestion.points.ToString();
+        
+        homeButton.onClick.AddListener(SceneManager.LoadMainMenu);
+
+        time = GameManager.Instance.CurrentStation.time;
         
         SetAnswerText();
         SetButtonMethods();
+    }
+
+    private void OnDisable()
+    {
+        button1.onClick.RemoveAllListeners();
+        button2.onClick.RemoveAllListeners();
+        button3.onClick.RemoveAllListeners();
+        button4.onClick.RemoveAllListeners();
+        homeButton.onClick.RemoveAllListeners();
+    }
+
+    private void Update()
+    {
+        time -= Time.deltaTime;
+        timeText.text = (int)time + " Min.";
     }
 
     private void SetAnswerText()
@@ -45,42 +72,61 @@ public class QuestionScreen : MonoBehaviour
             answer4.text = GameManager.Instance.CurrentAnswers[3].text;
     }
 
+    private void CheckAnswer(int index)
+    {
+        if (GameManager.Instance.CurrentAnswers[index].isCorrect)
+        {
+            currentScore += GameManager.Instance.CurrentQuestion.points;
+            currentScoreText.text = "Score: " + currentScore.ToString();
+        }
+    }
+
+    private void UpdateCurrentQuestionData()
+    {
+        currentQuestionCount++;
+        task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Length;
+        questionPoints.text = GameManager.Instance.CurrentQuestion.points.ToString();
+    }
+
+    private void LoadNewQuestion()
+    {
+        if (GameManager.Instance.SetNextQuestion() == false)
+        {
+            SceneManager.LoadEndScreen();
+        }
+    }
+
     private void SetButtonMethods()
     {
         button1.onClick.AddListener(() =>
         {
-            if (GameManager.Instance.SetNextQuestion() == false)
-            {
-                SceneManager.LoadEndScreen();
-                return;
-            }
+            CheckAnswer(0);
+            LoadNewQuestion();
             SetAnswerText();
+            UpdateCurrentQuestionData();
         });
+        
         button2.onClick.AddListener( () => {
-            if (GameManager.Instance.SetNextQuestion() == false)
-            {
-                SceneManager.LoadEndScreen();
-                return;
-            }
+            CheckAnswer(1);
+            LoadNewQuestion();
             SetAnswerText();
+            UpdateCurrentQuestionData();
         });
+        
         button3.onClick.AddListener(() =>
         {
-            if (GameManager.Instance.SetNextQuestion() == false)
-            {
-                SceneManager.LoadEndScreen();
-                return;
-            }
+            CheckAnswer(2);
+            LoadNewQuestion();
             SetAnswerText();
+            UpdateCurrentQuestionData();
         });
+        
         button4.onClick.AddListener(() =>
         {
-            if (GameManager.Instance.SetNextQuestion() == false)
-            {
-                SceneManager.LoadEndScreen();
-                return;
-            }
+            CheckAnswer(3);
+            LoadNewQuestion();
             SetAnswerText();
+            UpdateCurrentQuestionData();
         });
     }
 }
