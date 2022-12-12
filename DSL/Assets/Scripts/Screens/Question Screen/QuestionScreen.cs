@@ -77,13 +77,16 @@ public class QuestionScreen : MonoBehaviour
             answer4.text = GameManager.Instance.CurrentAnswers[3].text;
     }
 
-    private void CheckAnswer(int index)
+    private bool CheckAnswer(int index)
     {
         if (GameManager.Instance.CurrentAnswers[index].isCorrect)
         {
             GameManager.Instance.CurrentScore += GameManager.Instance.CurrentQuestion.points;
             currentScoreText.text = "Score: " + GameManager.Instance.CurrentScore;
+            return true;
         }
+
+        return false;
     }
 
     private void UpdateCurrentQuestionData()
@@ -105,7 +108,7 @@ public class QuestionScreen : MonoBehaviour
     {
         button1.onClick.AddListener(() =>
         {
-            CheckAnswer(0);
+            GameManager.Instance.AdChosenAnswer(currentQuestionCount, 0, CheckAnswer(0));
             LoadNewQuestion();
             SetAnswerQuestionText();
             UpdateCurrentQuestionData();
@@ -113,7 +116,7 @@ public class QuestionScreen : MonoBehaviour
         });
         
         button2.onClick.AddListener( () => {
-            CheckAnswer(1);
+            GameManager.Instance.AdChosenAnswer(currentQuestionCount, 1, CheckAnswer(1));
             LoadNewQuestion();
             SetAnswerQuestionText();
             UpdateCurrentQuestionData();
@@ -122,7 +125,7 @@ public class QuestionScreen : MonoBehaviour
         
         button3.onClick.AddListener(() =>
         {
-            CheckAnswer(2);
+            GameManager.Instance.AdChosenAnswer(currentQuestionCount, 2, CheckAnswer(2));
             LoadNewQuestion();
             SetAnswerQuestionText();
             UpdateCurrentQuestionData();
@@ -131,7 +134,7 @@ public class QuestionScreen : MonoBehaviour
         
         button4.onClick.AddListener(() =>
         {
-            CheckAnswer(3);
+            GameManager.Instance.AdChosenAnswer(currentQuestionCount, 3, CheckAnswer(3));
             LoadNewQuestion();
             SetAnswerQuestionText();
             UpdateCurrentQuestionData();

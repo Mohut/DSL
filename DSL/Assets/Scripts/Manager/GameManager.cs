@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     private int _usedTips;
     private int _questionIteration;
     private bool _payedForHint;
+    private List<ChosenAnswer> chosenAnswers = new List<ChosenAnswer>();
     #endregion
 
     #region Properties
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
     public bool PayedForHint { get => _payedForHint; set => _payedForHint = value; }
     public int CurrentScore { get => _currentScore; set => _currentScore = value; }
     public int UsedTips { get => _usedTips; set => _usedTips = value; }
+    public List<ChosenAnswer> ChosenAnswers { get => chosenAnswers; set => chosenAnswers = value; }
 
     #endregion
 
@@ -127,5 +130,15 @@ public class GameManager : MonoBehaviour
     public void ResetUsedTips()
     {
         _usedTips = 0;
+    }
+
+    public void ClearChosenAnswers()
+    {
+        chosenAnswers.Clear();
+    }
+
+    public void AdChosenAnswer(int taskNumber, int answerIndex, bool right)
+    {
+        chosenAnswers.Add(new ChosenAnswer(taskNumber, _currentQuestion, _currentAnswers[answerIndex], right, _usedTips > 0));
     }
 }
