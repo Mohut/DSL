@@ -8,15 +8,25 @@ public class ResultAnswer : MonoBehaviour
 
     private void Start()
     {
+        int space = -50;
         foreach (ChosenAnswer answer in GameManager.Instance.ChosenAnswers)
         {
-            CreateNewAnswer();
+            CreateNewAnswer(answer, space);
+            space -= 150;
         }
     }
 
-    private void CreateNewAnswer()
+    private void CreateNewAnswer(ChosenAnswer answer, int space)
     {
-        GameObject answer = Instantiate(answerPrefab, parent.transform.position, quaternion.identity);
-        answer.transform.parent = parent.transform;
+        GameObject answerObject = Instantiate(answerPrefab, parent.transform.position, quaternion.identity);
+        answerObject.transform.parent = parent.transform;
+        
+        Vector3 spaceVector = new Vector3(0, space, 0);
+        answerObject.transform.localPosition = spaceVector;
+        
+        FinishedQuestionInterface fqi = answerObject.GetComponent<FinishedQuestionInterface>();
+        fqi.QuestionNumber.text = answer.TaskNumber.ToString();
+        fqi.QuestionText.text = answer.Question.text;
+        fqi.TipsUsed.text = answer.UsedTip.ToString();
     }
 }

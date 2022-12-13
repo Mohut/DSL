@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +8,7 @@ public class QuestionScreen : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TipScreen tipScreen;
+    [SerializeField] private int answerDelay;
 
     [Header("Textfields")]
     [SerializeField] private TextMeshProUGUI groupName;
@@ -22,13 +25,20 @@ public class QuestionScreen : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] private Button button1;
+    [SerializeField] private Image buttonImage1;
     [SerializeField] private Button button2;
+    [SerializeField] private Image buttonImage2;
     [SerializeField] private Button button3;
+    [SerializeField] private Image buttonImage3;
     [SerializeField] private Button button4;
+    [SerializeField] private Image buttonImage4;
     [SerializeField] private Button homeButton;
+    [SerializeField] private Color grey;
+    [SerializeField] private Color green;
+    [SerializeField] private Color red;
 
     private float time;
-    private int currentQuestionCount = 1 ;
+    private int currentQuestionCount = 1;
     void Start()
     {
         GameManager.Instance.ResetScore();
@@ -60,7 +70,17 @@ public class QuestionScreen : MonoBehaviour
     private void Update()
     {
         time -= Time.deltaTime;
-        timeText.text = (int)time + " Min.";
+        
+        if (time < 60)
+        {
+            timeText.text = "Weniger als 1 Min.";
+        }
+        else
+        {
+            timeText.text = (int)time / 60 + " Min.";
+        }
+            
+        slider.value = time / GameManager.Instance.CurrentStation.time;
     }
 
     private void SetAnswerQuestionText()
@@ -104,41 +124,56 @@ public class QuestionScreen : MonoBehaviour
         }
     }
 
+    private void ShowIfCorrect(Image button, bool correct)
+    {
+        if(correct)
+            button.color = green;
+        
+        if(!correct)
+            button.color = red;
+    }
+
+    private void MakeButtonGrey(Image button)
+    {
+        button.color = grey;
+    }
+
+    IEnumerator ShowNextQuestion(Image button, int answerIndex)
+    {
+        ShowIfCorrect(button, GameManager.Instance.CurrentAnswers[answerIndex].isCorrect);
+
+        yield return new WaitForSeconds(answerDelay);
+        
+        LoadNewQuestion();
+        MakeButtonGrey(button);
+        tipScreen.ResetTip();
+        SetAnswerQuestionText();
+        UpdateCurrentQuestionData();
+    }
+
     private void SetButtonMethods()
     {
         button1.onClick.AddListener(() =>
         {
             GameManager.Instance.AdChosenAnswer(currentQuestionCount, 0, CheckAnswer(0));
-            LoadNewQuestion();
-            SetAnswerQuestionText();
-            UpdateCurrentQuestionData();
-            tipScreen.ResetTip();
+            StartCoroutine(ShowNextQuestion(buttonImage1,0));
         });
         
         button2.onClick.AddListener( () => {
             GameManager.Instance.AdChosenAnswer(currentQuestionCount, 1, CheckAnswer(1));
-            LoadNewQuestion();
-            SetAnswerQuestionText();
-            UpdateCurrentQuestionData();
-            tipScreen.ResetTip();
+            StartCoroutine(ShowNextQuestion(buttonImage2, 1));
         });
         
         button3.onClick.AddListener(() =>
         {
             GameManager.Instance.AdChosenAnswer(currentQuestionCount, 2, CheckAnswer(2));
-            LoadNewQuestion();
-            SetAnswerQuestionText();
-            UpdateCurrentQuestionData();
-            tipScreen.ResetTip();
+            StartCoroutine(ShowNextQuestion(buttonImage3, 2));
         });
         
         button4.onClick.AddListener(() =>
         {
             GameManager.Instance.AdChosenAnswer(currentQuestionCount, 3, CheckAnswer(3));
-            LoadNewQuestion();
-            SetAnswerQuestionText();
-            UpdateCurrentQuestionData();
-            tipScreen.ResetTip();
+            StartCoroutine(ShowNextQuestion(buttonImage4, 3));
         });
     }
 }

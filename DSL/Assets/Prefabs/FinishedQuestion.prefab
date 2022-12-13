@@ -97,7 +97,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 12
+  m_fontSizeMin: 30
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -187,9 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24864e400510fc94c8040a490c7bfc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionNumber: {fileID: 0}
-  questionText: {fileID: 0}
-  tipsUsed: {fileID: 0}
+  questionNumber: {fileID: 5645562348181352384}
+  questionText: {fileID: 4873320812218281487}
+  tipsUsed: {fileID: 7176463997163592751}
 --- !u!1 &5645562348181352386
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,11 +283,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.35
+  m_fontSize: 30
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 12
+  m_fontSizeMin: 30
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

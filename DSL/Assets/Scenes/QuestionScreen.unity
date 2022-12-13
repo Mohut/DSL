@@ -206,7 +206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 614012408}
   m_FillRect: {fileID: 609197272}
   m_HandleRect: {fileID: 614012407}
-  m_Direction: 0
+  m_Direction: 1
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
@@ -580,6 +580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 8866150}
   tipScreen: {fileID: 221029835}
+  answerDelay: 1
   groupName: {fileID: 1264149352}
   task: {fileID: 672714734}
   subject: {fileID: 847850729}
@@ -592,10 +593,17 @@ MonoBehaviour:
   answer3: {fileID: 1367156582}
   answer4: {fileID: 1472805481}
   button1: {fileID: 1195983719}
+  buttonImage1: {fileID: 1195983720}
   button2: {fileID: 555603538}
+  buttonImage2: {fileID: 555603539}
   button3: {fileID: 72042496}
+  buttonImage3: {fileID: 72042497}
   button4: {fileID: 242656234}
+  buttonImage4: {fileID: 242656235}
   homeButton: {fileID: 713049689}
+  grey: {r: 0.86274517, g: 0.86274517, b: 0.86274517, a: 1}
+  green: {r: 0.20038268, g: 0.5377358, b: 0.26051888, a: 1}
+  red: {r: 0.6886792, g: 0.23713954, b: 0.23713954, a: 1}
 --- !u!114 &221029835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2873,7 +2881,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
+  m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1195983717

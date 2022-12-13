@@ -28,6 +28,16 @@ public class TipScreen : MonoBehaviour
     private void OpenTipWindow(bool state)
     {
         tipPanel.SetActive(state);
+        if (GameManager.Instance.PayedForHint)
+        {
+            tipText.enabled = true;
+            showTippButton.enabled = false;
+        }
+        else
+        {
+            tipText.enabled = false;
+            showTippButton.enabled = true;
+        }
     }
 
     private void ShowTip()
