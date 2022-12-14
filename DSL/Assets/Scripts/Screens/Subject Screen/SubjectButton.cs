@@ -18,38 +18,36 @@ public class SubjectButton : MonoBehaviour
     {
         button1.onClick.AddListener(() =>
         {
-            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[0]);
             DataManager.Instance.AddNewGroup(inputField.text);
+            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[0]);
             SceneManager.LoadQuestionScreen();
         });
 
         button2.onClick.AddListener(() =>
         {
-            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[1]);
             DataManager.Instance.AddNewGroup(inputField.text);
+            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[1]);
             SceneManager.LoadQuestionScreen();
         });
 
         button3.onClick.AddListener(() =>
         {
-            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[2]);
             DataManager.Instance.AddNewGroup(inputField.text);
+            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[2]);
             SceneManager.LoadQuestionScreen();
         });
 
         button4.onClick.AddListener(() =>
         {
-            
-            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[3]);
             DataManager.Instance.AddNewGroup(inputField.text);
+            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[3]);
             SceneManager.LoadQuestionScreen();
         });
         
         button5.onClick.AddListener(() =>
         {
-            
-            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[4]);
             DataManager.Instance.AddNewGroup(inputField.text);
+            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[4]);
             SceneManager.LoadQuestionScreen();
         });
         

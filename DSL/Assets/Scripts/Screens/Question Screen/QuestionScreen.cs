@@ -41,7 +41,6 @@ public class QuestionScreen : MonoBehaviour
     private int currentQuestionCount = 1;
     void Start()
     {
-        GameManager.Instance.ResetScore();
         GameManager.Instance.ResetUsedTips();
         
         groupName.text = GameManager.Instance.CurrentGroup.name;
@@ -101,8 +100,8 @@ public class QuestionScreen : MonoBehaviour
     {
         if (GameManager.Instance.CurrentAnswers[index].isCorrect)
         {
-            GameManager.Instance.CurrentScore += GameManager.Instance.CurrentQuestion.points;
-            currentScoreText.text = "Score: " + GameManager.Instance.CurrentScore;
+            GameManager.Instance.CurrentGroup.points += GameManager.Instance.CurrentQuestion.points;
+            currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
             return true;
         }
 
