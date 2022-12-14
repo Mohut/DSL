@@ -28,6 +28,7 @@ public class TipScreen : MonoBehaviour
     private void OpenTipWindow(bool state)
     {
         tipPanel.SetActive(state);
+        
         if (GameManager.Instance.PayedForHint)
         {
             tipText.enabled = true;
@@ -37,6 +38,7 @@ public class TipScreen : MonoBehaviour
         {
             tipText.enabled = false;
             showTippButton.enabled = true;
+            showTippButton.gameObject.SetActive(true);
         }
     }
 

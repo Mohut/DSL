@@ -139,6 +139,6 @@ public class GameManager : MonoBehaviour
 
     public void AdChosenAnswer(int taskNumber, int answerIndex, bool right)
     {
-        chosenAnswers.Add(new ChosenAnswer(taskNumber, _currentQuestion, _currentAnswers[answerIndex], right,  0));
+        chosenAnswers.Add(new ChosenAnswer(taskNumber, _currentQuestion, _currentAnswers[answerIndex], right,  _usedTips));
     }
 }

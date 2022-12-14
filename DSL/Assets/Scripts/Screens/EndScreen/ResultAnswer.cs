@@ -1,18 +1,23 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResultAnswer : MonoBehaviour
 {
     [SerializeField] private GameObject parent;
     [SerializeField] private GameObject answerPrefab;
+    [SerializeField] private RectTransform contentTransform;
 
     private void Start()
     {
         int space = -50;
+        float contentSize = contentTransform.rect.height;
         foreach (ChosenAnswer answer in GameManager.Instance.ChosenAnswers)
         {
             CreateNewAnswer(answer, space);
-            space -= 150;
+            contentTransform.sizeDelta = new Vector2(0, contentSize);
+            space -= 200;
+            contentSize += 200;
         }
     }
 
@@ -27,6 +32,15 @@ public class ResultAnswer : MonoBehaviour
         FinishedQuestionInterface fqi = answerObject.GetComponent<FinishedQuestionInterface>();
         fqi.QuestionNumber.text = answer.TaskNumber.ToString();
         fqi.QuestionText.text = answer.Question.text;
+        fqi.AnswerText.text = answer.Answer.text;
         fqi.TipsUsed.text = answer.UsedTip.ToString();
+        if (answer.Right)
+        {
+            answerObject.GetComponent<Image>().color = Color.green;
+        }
+        else
+        {
+            answerObject.GetComponent<Image>().color = Color.red;
+        }
     }
 }

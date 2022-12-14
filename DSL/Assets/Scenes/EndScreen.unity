@@ -955,6 +955,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 2044416580}
   answerPrefab: {fileID: 5645562347676500231, guid: 6fe872eaf802b6b408fd6d5254eb0a8e, type: 3}
+  contentTransform: {fileID: 2044416581}
 --- !u!1 &541420377
 GameObject:
   m_ObjectHideFlags: 0
