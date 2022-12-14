@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         CurrentQuestion = DataManager.Instance.GetQuestionById(station.questionId[0]);
         CurrentAnswers = DataManager.Instance.GetAnswersById(CurrentQuestion.answerId.ToList());
         CurrentHint = DataManager.Instance.GetHintById(CurrentQuestion.hintId);
+        CurrentGroup.stationId = CurrentStation.id;
 
         QuestionIteration = 0;
         PayedForHint = false;
