@@ -11,9 +11,10 @@ public class Group
     // the station, for which this group as been created for
     public int stationId;
 
-    public Group(string name, int points)
+    public Group(string name, int points, int stationId = 0)
     {
         this.name = name;
         this.points = points;
+        this.stationId = stationId;
     }
 }
