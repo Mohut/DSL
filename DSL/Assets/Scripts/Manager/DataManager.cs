@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DataManager : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class DataManager : MonoBehaviour
 
         groupData = new GroupData();
         saveFile = Application.persistentDataPath + saveFile;
+        Debug.Log(saveFile);
         DontDestroyOnLoad(this);
     }
 
@@ -67,7 +69,7 @@ public class DataManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            AddNewGroup("Isolde�s Gang");
+            AddNewGroup("Isoldes Gang", Random.Range(0, 100), Random.Range(0, 2));
         }
     }
 
@@ -81,11 +83,12 @@ public class DataManager : MonoBehaviour
     #endregion
 
     #region Group Functions
-    public Group AddNewGroup(string name)
+    public Group AddNewGroup(string name, int points = 0, int stationId = 0)
     {
         Group group = new Group(name, 0);
         group.name = name;
-        group.points = 0;
+        group.points = points;
+        group.stationId = stationId;
         groupData.groupData.Add(group);
         _isGroupFileDirty = true;
         OnNewGroupCreated?.Invoke(group);
@@ -103,6 +106,7 @@ public class DataManager : MonoBehaviour
             // Deserialize the JSON data 
             //  into a pattern matching the GameData class.
             groupData = JsonUtility.FromJson<GroupData>(fileContents);
+            Groups = new List<Group>(groupData.groupData);
             OnGroupDataLoaded?.Invoke();
         }
     }
@@ -151,14 +155,14 @@ public class DataManager : MonoBehaviour
     {
         Station station1 = new Station();
         station1.id = 0;
-        station1.name = "Privatssph�re Station";
-        station1.time = 20;
+        station1.name = "Privatssphäre Station";
+        station1.time = 200;
         station1.questionId = new int[2]{ 0, 1 };
 
         Station station2 = new Station();
         station2.id = 1;
         station2.name = "Datenerhebungsstation";
-        station2.time = 15;
+        station2.time = 150;
         station2.questionId = new int[2] { 2, 3 };
 
         Question question1 = new Question();
