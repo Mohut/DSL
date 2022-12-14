@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -57,6 +58,22 @@ public class DataManager : MonoBehaviour
         saveFile = Application.persistentDataPath + saveFile;
         Debug.Log(saveFile);
         DontDestroyOnLoad(this);
+
+        //\\na2.hs-mittweida.de\LEHRE\Hinweis.txt
+        //var url = @"\\na2.hs-mittweida.de\LEHRE\Hinweis.txt";
+
+        //var request = WebRequest.Create(url);
+        //request.Method = "GET";
+
+        //using var webResponse = request.GetResponse();
+        //using var webStream = webResponse.GetResponseStream();
+
+        //using var reader = new StreamReader(webStream);
+        //var data = reader.ReadToEnd();
+
+        //File.WriteAllText("Hinweis.txt", data);
+
+        //Debug.Log(data);
     }
 
     private void Start()
@@ -69,11 +86,11 @@ public class DataManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            AddNewGroup("Isoldes Gang", Random.Range(0, 100), Random.Range(0, 2));
+            AddNewGroup("groupName" + Random.Range(0, 10), Random.Range(0, 100), Random.Range(0, 2));
         }
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationPause()
     {
         if (_isGroupFileDirty)
         {
@@ -107,7 +124,12 @@ public class DataManager : MonoBehaviour
             //  into a pattern matching the GameData class.
             groupData = JsonUtility.FromJson<GroupData>(fileContents);
             Groups = new List<Group>(groupData.groupData);
+            Debug.Log(Groups.Count + " groups have been read.");
             OnGroupDataLoaded?.Invoke();
+        }
+        else
+        {
+            Debug.Log("Group file doesnt exist.");
         }
     }
 

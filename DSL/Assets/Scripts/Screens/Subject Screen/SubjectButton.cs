@@ -46,9 +46,8 @@ public class SubjectButton : MonoBehaviour
         
         button5.onClick.AddListener(() =>
         {
-            
-            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[4]);
             DataManager.Instance.AddNewGroup(inputField.text);
+            GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[4]);
             SceneManager.LoadQuestionScreen();
         });
         

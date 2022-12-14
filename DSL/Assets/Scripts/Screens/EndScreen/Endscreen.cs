@@ -10,7 +10,7 @@ public class Endscreen : MonoBehaviour
     private void Start()
     {
         groupName.text = GameManager.Instance.CurrentGroup.name;
-        points.text = "Punkte: " + GameManager.Instance.CurrentScore;
+        points.text = "Punkte: " + GameManager.Instance.CurrentGroup.points;
         tipps.text = "Tipps: " + GameManager.Instance.UsedTips;
     }
 }

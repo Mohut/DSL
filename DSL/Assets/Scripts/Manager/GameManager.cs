@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,8 +14,8 @@ public class GameManager : MonoBehaviour
     private List<Answer> _currentAnswers = new();
     private Hint _currentHint;
     private Group _currentGroup;
+    private List<Group> _playsessionsGroups = new();
 
-    private int _currentScore;
     private int _usedTips;
     private int _questionIteration;
     private bool _payedForHint;
@@ -29,9 +31,9 @@ public class GameManager : MonoBehaviour
     public int QuestionIteration { get => _questionIteration; set => _questionIteration = value; }
     public Group CurrentGroup { get => _currentGroup; set => _currentGroup = value; }
     public bool PayedForHint { get => _payedForHint; set => _payedForHint = value; }
-    public int CurrentScore { get => _currentScore; set => _currentScore = value; }
     public int UsedTips { get => _usedTips; set => _usedTips = value; }
     public List<ChosenAnswer> ChosenAnswers { get => chosenAnswers; set => chosenAnswers = value; }
+    public List<Group> PlaysessionsGroups { get => _playsessionsGroups; set => _playsessionsGroups = value; }
 
     #endregion
 
@@ -65,6 +67,7 @@ public class GameManager : MonoBehaviour
     public void SetCurrentGroup(Group group)
     {
         CurrentGroup = group;
+        PlaysessionsGroups.Add(CurrentGroup);
     }
 
     public void SetCurrentStation(Station station)
@@ -121,11 +124,6 @@ public class GameManager : MonoBehaviour
             CurrentGroup.points -= CurrentHint.price;
             PayedForHint = true;
         }
-    }
-
-    public void ResetScore()
-    {
-        _currentScore = 0;
     }
 
     public void ResetUsedTips()

@@ -25,6 +25,14 @@ public class HighscoreStation : MonoBehaviour
     {
         List<Group> tmp = new();
 
+        foreach (Group group in GameManager.Instance.PlaysessionsGroups)
+        {
+            if (group.stationId == _station.id)
+            {
+                tmp.Add(group);
+            }
+        }
+
         // if the group did this station, put it in a temp list
         foreach (Group group in groups)
         {
@@ -41,7 +49,7 @@ public class HighscoreStation : MonoBehaviour
             GameObject go = Instantiate(groupUi, verticalLayoutGroup.transform);
             HighscoreGroup highscoreStation = go.GetComponent<HighscoreGroup>();
 
-            highscoreStation.Initialize(tmp[i], i);
+            highscoreStation.Initialize(tmp[i], i + 1);
         }
     }
 }
