@@ -45,6 +45,7 @@ public class TipScreen : MonoBehaviour
     private void ShowTip()
     {
         GameManager.Instance.UsedTips++;
+        GameManager.Instance.AllUsedTips++;
         GameManager.Instance.PayForHint();
         tipText.enabled = true;
         showTippButton.enabled = false;
@@ -52,6 +53,7 @@ public class TipScreen : MonoBehaviour
 
     public void ResetTip()
     {
+        GameManager.Instance.UsedTips = 0;
         GameManager.Instance.PayedForHint = false;
         tipText.text = GameManager.Instance.CurrentHint.text;
         tipText.enabled = false;

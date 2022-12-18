@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private List<Group> _playsessionsGroups = new();
 
     private int _usedTips;
+    private int _allUsedTips;
     private int _questionIteration;
     private bool _payedForHint;
     private List<ChosenAnswer> chosenAnswers = new List<ChosenAnswer>();
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     public Group CurrentGroup { get => _currentGroup; set => _currentGroup = value; }
     public bool PayedForHint { get => _payedForHint; set => _payedForHint = value; }
     public int UsedTips { get => _usedTips; set => _usedTips = value; }
+    public int AllUsedTips { get => _allUsedTips; set => _allUsedTips = value; }
     public List<ChosenAnswer> ChosenAnswers { get => chosenAnswers; set => chosenAnswers = value; }
     public List<Group> PlaysessionsGroups { get => _playsessionsGroups; set => _playsessionsGroups = value; }
 

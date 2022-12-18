@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,13 @@ public class ResultAnswer : MonoBehaviour
     [SerializeField] private RectTransform contentTransform;
 
     private void Start()
+    {
+        FillInAnswers();
+        GameManager.Instance.ChosenAnswers = new List<ChosenAnswer>();
+        GameManager.Instance.AllUsedTips = 0;
+    }
+
+    private void FillInAnswers()
     {
         int space = -50;
         float contentSize = contentTransform.rect.height;

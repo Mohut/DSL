@@ -140,8 +140,18 @@ public class QuestionScreen : MonoBehaviour
     IEnumerator ShowNextQuestion(Image button, int answerIndex)
     {
         ShowIfCorrect(button, GameManager.Instance.CurrentAnswers[answerIndex].isCorrect);
+        
+        button1.interactable = false;
+        button2.interactable = false;
+        button3.interactable = false;
+        button4.interactable = false;
 
         yield return new WaitForSeconds(answerDelay);
+        
+        button1.interactable = true;
+        button2.interactable = true;
+        button3.interactable = true;
+        button4.interactable = true;
         
         LoadNewQuestion();
         MakeButtonGrey(button);

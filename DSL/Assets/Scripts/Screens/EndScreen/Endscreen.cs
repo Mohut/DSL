@@ -11,6 +11,6 @@ public class Endscreen : MonoBehaviour
     {
         groupName.text = GameManager.Instance.CurrentGroup.name;
         points.text = "Punkte: " + GameManager.Instance.CurrentGroup.points;
-        tipps.text = "Tipps: " + GameManager.Instance.UsedTips;
+        tipps.text = "Tipps: " + GameManager.Instance.AllUsedTips;
     }
 }
