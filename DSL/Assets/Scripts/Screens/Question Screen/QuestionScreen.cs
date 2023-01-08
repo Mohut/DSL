@@ -88,12 +88,38 @@ public class QuestionScreen : MonoBehaviour
         
         if(GameManager.Instance.CurrentAnswers.Count >= 1)
             answer1.text = GameManager.Instance.CurrentAnswers[0].text;
+        
         if(GameManager.Instance.CurrentAnswers.Count >= 2)
             answer2.text = GameManager.Instance.CurrentAnswers[1].text;
-        if(GameManager.Instance.CurrentAnswers.Count >= 3)
+        
+        if (GameManager.Instance.CurrentAnswers.Count >= 3)
+        {
+            button3.interactable = true;
+            buttonImage3.enabled = true;
+            answer3.enabled = true;
             answer3.text = GameManager.Instance.CurrentAnswers[2].text;
-        if(GameManager.Instance.CurrentAnswers.Count >= 4)
+        }
+        else
+        {
+            button3.interactable = false;
+            buttonImage3.enabled = false;
+            answer3.enabled = false;
+        }
+
+        if (GameManager.Instance.CurrentAnswers.Count >= 4)
+        {
+            button4.interactable = true;
+            buttonImage4.enabled = true;
+            answer4.enabled = true;
             answer4.text = GameManager.Instance.CurrentAnswers[3].text;
+        }
+        else
+        {
+            button4.interactable = false;
+            buttonImage4.enabled = false;
+            answer4.enabled = false;
+        }
+            
     }
 
     private bool CheckAnswer(int index)
@@ -166,23 +192,27 @@ public class QuestionScreen : MonoBehaviour
         {
             GameManager.Instance.AdChosenAnswer(currentQuestionCount, 0, CheckAnswer(0));
             StartCoroutine(ShowNextQuestion(buttonImage1,0));
+            tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
         });
         
         button2.onClick.AddListener( () => {
             GameManager.Instance.AdChosenAnswer(currentQuestionCount, 1, CheckAnswer(1));
             StartCoroutine(ShowNextQuestion(buttonImage2, 1));
+            tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
         });
         
         button3.onClick.AddListener(() =>
         {
             GameManager.Instance.AdChosenAnswer(currentQuestionCount, 2, CheckAnswer(2));
             StartCoroutine(ShowNextQuestion(buttonImage3, 2));
+            tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
         });
         
         button4.onClick.AddListener(() =>
         {
             GameManager.Instance.AdChosenAnswer(currentQuestionCount, 3, CheckAnswer(3));
             StartCoroutine(ShowNextQuestion(buttonImage4, 3));
+            tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
         });
     }
 }

@@ -42,6 +42,12 @@ public class TipScreen : MonoBehaviour
         }
     }
 
+    public void ShowTipButton(bool state)
+    {
+        tipButton.enabled = state;
+        tipButton.interactable = state;
+    }
+
     private void ShowTip()
     {
         GameManager.Instance.UsedTips++;
