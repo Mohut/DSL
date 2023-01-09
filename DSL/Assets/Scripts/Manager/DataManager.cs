@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -130,12 +131,12 @@ public class DataManager : MonoBehaviour
 
     private void ReadCSVFile()
     {
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        var config = new CsvConfiguration(CultureInfo.GetCultureInfoByIetfLanguageTag("de-DE"))
         {
             Delimiter = ";",
         };
 
-        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(stations)))
+        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(stations), Encoding.UTF7))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<StationMap>();
@@ -146,7 +147,7 @@ public class DataManager : MonoBehaviour
                 Stations.Add(item);
             }
         }
-        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(questions)))
+        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(questions), Encoding.UTF7))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<QuestionMap>();
@@ -154,10 +155,11 @@ public class DataManager : MonoBehaviour
 
             foreach (var item in records)
             {
+                Debug.Log(item.text);
                 Questions.Add(item);
             }
         }
-        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(answers)))
+        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(answers), Encoding.UTF7))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<AnswerMap>();
@@ -168,7 +170,7 @@ public class DataManager : MonoBehaviour
                 Answers.Add(item);
             }
         }
-        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(hints)))
+        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(hints), Encoding.UTF7))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<HintMap>();
