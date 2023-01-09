@@ -44,4 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cadbee42b404b0a4f83d0aaec852b121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stations: {fileID: 4900000, guid: 73a3da5c9c31f354d997eeb34cb31983, type: 3}
+  questions: {fileID: 4900000, guid: 60bcc5346e7d562438f629a057567c3e, type: 3}
+  answers: {fileID: 4900000, guid: fa7b5c44264a98b478476649860c35b7, type: 3}
+  hints: {fileID: 4900000, guid: d22568413eab8514c9f59f1fce449dcd, type: 3}
   saveFile: /groupdata.json

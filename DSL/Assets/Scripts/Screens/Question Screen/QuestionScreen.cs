@@ -46,7 +46,7 @@ public class QuestionScreen : MonoBehaviour
         groupName.text = GameManager.Instance.CurrentGroup.name;
         subject.text = GameManager.Instance.CurrentStation.name;
         question.text = GameManager.Instance.CurrentQuestion.text;
-        task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Length;
+        task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Count;
         questionPoints.text = GameManager.Instance.CurrentQuestion.points.ToString();
         
         homeButton.onClick.AddListener(SceneManager.LoadMainMenu);
@@ -137,7 +137,7 @@ public class QuestionScreen : MonoBehaviour
     private void UpdateCurrentQuestionData()
     {
         currentQuestionCount++;
-        task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Length;
+        task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Count;
         questionPoints.text = GameManager.Instance.CurrentQuestion.points.ToString();
     }
 

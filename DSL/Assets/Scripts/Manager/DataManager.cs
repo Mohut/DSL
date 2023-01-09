@@ -1,14 +1,24 @@
+using CsvHelper;
+using CsvHelper.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class DataManager : MonoBehaviour
 {
     #region Attributes
+    [Header("References")]
+    public TextAsset stations;
+    public TextAsset questions;
+    public TextAsset answers;
+    public TextAsset hints;
+
     [Header("Options")]
     public string saveFile = "/groupdata.json";
 
@@ -58,28 +68,13 @@ public class DataManager : MonoBehaviour
         saveFile = Application.persistentDataPath + saveFile;
         Debug.Log(saveFile);
         DontDestroyOnLoad(this);
-
-        //\\na2.hs-mittweida.de\LEHRE\Hinweis.txt
-        //var url = @"\\na2.hs-mittweida.de\LEHRE\Hinweis.txt";
-
-        //var request = WebRequest.Create(url);
-        //request.Method = "GET";
-
-        //using var webResponse = request.GetResponse();
-        //using var webStream = webResponse.GetResponseStream();
-
-        //using var reader = new StreamReader(webStream);
-        //var data = reader.ReadToEnd();
-
-        //File.WriteAllText("Hinweis.txt", data);
-
-        //Debug.Log(data);
     }
 
     private void Start()
     {
         CreateTestData();
-        ReadFile();
+        ReadGroupFile();
+        ReadCSVFile();
     }
 
     private void Update()
@@ -112,7 +107,7 @@ public class DataManager : MonoBehaviour
         return group;
     }
 
-    private void ReadFile()
+    private void ReadGroupFile()
     {
         // Does the file exist?
         if (File.Exists(saveFile))
@@ -130,6 +125,59 @@ public class DataManager : MonoBehaviour
         else
         {
             Debug.Log("Group file doesnt exist.");
+        }
+    }
+
+    private void ReadCSVFile()
+    {
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            Delimiter = ";",
+        };
+
+        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(stations)))
+        using (var csv = new CsvReader(reader, config))
+        {
+            csv.Context.RegisterClassMap<StationMap>();
+            var records = csv.GetRecords<Station>();
+
+            foreach (var item in records)
+            {
+                Stations.Add(item);
+            }
+        }
+        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(questions)))
+        using (var csv = new CsvReader(reader, config))
+        {
+            csv.Context.RegisterClassMap<QuestionMap>();
+            var records = csv.GetRecords<Question>();
+
+            foreach (var item in records)
+            {
+                Questions.Add(item);
+            }
+        }
+        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(answers)))
+        using (var csv = new CsvReader(reader, config))
+        {
+            csv.Context.RegisterClassMap<AnswerMap>();
+            var records = csv.GetRecords<Answer>();
+
+            foreach (var item in records)
+            {
+                Answers.Add(item);
+            }
+        }
+        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(hints)))
+        using (var csv = new CsvReader(reader, config))
+        {
+            csv.Context.RegisterClassMap<HintMap>();
+            var records = csv.GetRecords<Hint>();
+
+            foreach (var item in records)
+            {
+                Hints.Add(item);
+            }
         }
     }
 
@@ -175,6 +223,7 @@ public class DataManager : MonoBehaviour
     #region Testing Functions
     private void CreateTestData()
     {
+        /*
         Station station1 = new Station();
         station1.id = 0;
         station1.name = "Privatssphäre Station";
@@ -298,6 +347,7 @@ public class DataManager : MonoBehaviour
         Hints.Add(hint4);
 
         OnStationsLoaded?.Invoke();
+        */
     }
 
     #endregion

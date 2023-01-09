@@ -44,12 +44,15 @@ public class HighscoreStation : MonoBehaviour
         // order by points
         tmp = tmp.OrderByDescending(x => x.points).ToList();
 
-        for (int i = 0; i < tmp.Count; i++)
+        for (int i = 0; i < 3; i++)
         {
-            GameObject go = Instantiate(groupUi, verticalLayoutGroup.transform);
-            HighscoreGroup highscoreStation = go.GetComponent<HighscoreGroup>();
+            if(tmp.Count > i)
+            {
+                GameObject go = Instantiate(groupUi, verticalLayoutGroup.transform);
+                HighscoreGroup highscoreStation = go.GetComponent<HighscoreGroup>();
 
-            highscoreStation.Initialize(tmp[i], i + 1);
+                highscoreStation.Initialize(tmp[i], i + 1);
+            }
         }
     }
 }

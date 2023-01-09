@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
     {
         QuestionIteration += 1;
 
-        if (CurrentStation.questionId.Length <= QuestionIteration)
+        if (CurrentStation.questionId.Count <= QuestionIteration)
             return false;
         
         Question nextQuestion = DataManager.Instance.GetQuestionById(CurrentStation.questionId[QuestionIteration]);
