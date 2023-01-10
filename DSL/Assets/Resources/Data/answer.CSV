@@ -14,12 +14,12 @@ id;text;isCorrect
 12;Gatekeeper*innen;FALSCH
 13;Schneeballsystem;FALSCH
 14;Direkte Recherchestrategien/Selbstmelder;WAHR
-15;Übersichtlich und gut handhabbar sein;WAHR
+15;Ãœbersichtlich und gut handhabbar sein;WAHR
 16;sehr viele Fragen haben ;FALSCH
 17;ohne struktur sein;FALSCH
 18;ohne planung funktionieren;FALSCH
 19;die Fragen ablesen;FALSCH
-20;angebotene Informationen übergehen;FALSCH
+20;angebotene Informationen Ã¼bergehen;FALSCH
 21;Offenheit bewahren;WAHR
 22;Nein;WAHR
 23;Ja;FALSCH
@@ -32,16 +32,16 @@ id;text;isCorrect
 30;Ja, immer;FALSCH
 31;Nein, nie;FALSCH
 32;Ja, manchmal;FALSCH
-33;Hängt von der Situation ab;WAHR
+33;HÃ¤ngt von der Situation ab;WAHR
 34;Quantitative Interviews;WAHR
 35;Strukturierte Interviews;FALSCH
 36;Unstrukturierte Interviews;FALSCH
 37;Qualitative Interviews;FALSCH
-38;sprachliche Fähigkeiten und der Fragen;FALSCH
+38;sprachliche FÃ¤higkeiten und der Fragen;FALSCH
 39;von der Strukturierung und nach Textsorte;WAHR
 40;der Fragen und Strukturierung;FALSCH
 41;Narratives Interviews, Diskrepantes-Dialogische Interviews, Inovationsinterviews;FALSCH
-42;Erzähl-Interviews, Diskursiv-Dialogische Interviews, Experteninterviews;FALSCH
+42;ErzÃ¤hl-Interviews, Diskursiv-Dialogische Interviews, Experteninterviews;FALSCH
 43;Narratives Interviews, Diskursiv-Dialogische Interviews, Experteninterviews;WAHR
 44;Solo Interviews, Diskurs-Dialog Interviews, Expressinterviews;FALSCH
 45;Narratives Interview/ Rezeptives Interview;FALSCH
@@ -65,9 +65,9 @@ id;text;isCorrect
 63;Narratives Interview/ Rezeptives Interview;FALSCH
 64;Narrative Interviews/ Ero-episches Interview;FALSCH
 65;Kontaktaufnahme, Break-Up Phase, Interviewfragen zeigen, Interviewabschluss;FALSCH
-66;Interview spontan mit Menschen halten mit Intervieweröffnung und Interviewabschluss;FALSCH
-67;Kontaktaufnahme, Warmin-Up Phase, Intervieweröffnung, Interviewabschluss;WAHR
-68;nicht zu persönlich werden;FALSCH
+66;Interview spontan mit Menschen halten mit InterviewerÃ¶ffnung und Interviewabschluss;FALSCH
+67;Kontaktaufnahme, Warmin-Up Phase, InterviewerÃ¶ffnung, Interviewabschluss;WAHR
+68;nicht zu persÃ¶nlich werden;FALSCH
 69;Vertrauen entwickeln;WAHR
 70;das DU anbieten;FALSCH
 71;Fragestellung der Studie geheim halten;FALSCH
@@ -76,7 +76,7 @@ id;text;isCorrect
 74;Interview wurde niedergeschrieben;FALSCH
 75;Es geht sofort nach der Erhebung weiter;FALSCH
 76;Kategorie, Einheit, Codierer;WAHR
-77;Kategorie, Mehrheit, Verschlüsselung;FALSCH
+77;Kategorie, Mehrheit, VerschlÃ¼sselung;FALSCH
 78;Einheit, Gleichheit, Bereich;FALSCH
 79;Codierung, Bereich, Einheit;FALSCH
 80;Zusammenfassung, Explikation, Strukturierung;WAHR
@@ -86,14 +86,14 @@ id;text;isCorrect
 84;Zusammenfassung;FALSCH
 85;Explikation;WAHR
 86;Strukturierung;FALSCH
-87;Reduktion der Komplexität und Klassifizierung interessierender Merkmale;WAHR
+87;Reduktion der KomplexitÃ¤t und Klassifizierung interessierender Merkmale;WAHR
 88;Bildung von Gruppen gleicher Angaben;FALSCH
-89;Systematisierung der Angaben, Reduktion der Komplexität;FALSCH
-90;Klassifizierung besonderer Merkmale, Erweiterung des Überblicks;FALSCH
+89;Systematisierung der Angaben, Reduktion der KomplexitÃ¤t;FALSCH
+90;Klassifizierung besonderer Merkmale, Erweiterung des Ãœberblicks;FALSCH
 91;Auswahleinheit, Analyseeinheit, Codiereinheit;WAHR
-92;Analyseeinheit, Maßeinheit, Texteinheit;FALSCH
+92;Analyseeinheit, MaÃŸeinheit, Texteinheit;FALSCH
 93;Auswahleinheit, Kategorie, Codierung;FALSCH
-94;Längeneinheit, Zeiteinheit, Codiereinheit;FALSCH
+94;LÃ¤ngeneinheit, Zeiteinheit, Codiereinheit;FALSCH
 95;Codiereinheit;WAHR
 96;Auswahleinheit;FALSCH
 97;Analyseeinheit;FALSCH

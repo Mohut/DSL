@@ -1,41 +1,41 @@
 id;text;type;points;answerId;;
-0;Ist eine Total Erhebung im Allgemeinen möglich?;;10;0,1,2;;
-1;Was für Rekrutierungsstrategien gibt es?;;10;3,4,5;;
+0;Ist eine Total Erhebung im Allgemeinen mÃ¶glich?;;10;0,1,2;;
+1;Was fÃ¼r Rekrutierungsstrategien gibt es?;;10;3,4,5;;
 2;"Welche Rekrutierungsstrategie trifft auf diese Beschreibung:
-„Es werden Personen angesprochen, die wieder andere ansprechen, die
+â€Es werden Personen angesprochen, die wieder andere ansprechen, die
 wiederum andere ansprechen sollen usw., um so geeignete
-Interviewpartner*innen zu gewinnen“ ?";;10;6,7,8;;
+Interviewpartner*innen zu gewinnenâ€œ ?";;10;6,7,8;;
 3;"Welche Rekrutierungsstrategie trifft auf diese Beschreibung:
-„ „Türsteher*innen“ werden gebeten, passende Interviewpartner*innen zu
-benennen, auszusuchen, anzusprechen“ ?
+â€ â€TÃ¼rsteher*innenâ€œ werden gebeten, passende Interviewpartner*innen zu
+benennen, auszusuchen, anzusprechenâ€œ ?
 ";;10;9, 10, 11;;
 4;"Welche Rekrutierungsstrategie trifft auf diese Beschreibung:
-„Suche über Telefonbücher, Internetpräsenzen, Aufgeben von Anzeigen in
-Zeitungen bzw. über Mailverteiler, pick-up (direktes Aufgreifen vor Ort)“ ?
+â€Suche Ã¼ber TelefonbÃ¼cher, InternetprÃ¤senzen, Aufgeben von Anzeigen in
+Zeitungen bzw. Ã¼ber Mailverteiler, pick-up (direktes Aufgreifen vor Ort)â€œ ?
 ";;10;12, 13, 14;;
 5;Wenn ein Interview vorbereitet wird, dann kann es...;;10;15, 16, 17, 18;;
 6;Beim Interview sollten Sie...;;10;19, 20, 21;;
 7;Darf eine Forschungsfrage direkt gestellt werden?;;10;22, 23;;
 8;Muss eine Frage immer klar und einfach formuliert sein?;;10;24, 25, 26;;
 9;Sind entweder- oder Fragen in der Formulierung in Ordnung?;;10;27, 28, 29;;
-10;Müssen Sie das Sprachniveau an die Zielgruppe anpassen?;;10;30, 31, 32, 33;;
+10;MÃ¼ssen Sie das Sprachniveau an die Zielgruppe anpassen?;;10;30, 31, 32, 33;;
 21;Welche Art von Interview unterscheidet sich nach dem Grad der Strukturierung und der Textsorte?;;10;34, 35, 36, 37;;
 22;Worin unterscheiden sich Interviews voneinander?;;10;38, 39, 40;;
 23;Welche der genannten Interview Varianten gibt es?;;10;41, 42, 43, 44;;
-24;Zu welcher Interviewvarianten treffen diese Aussagen „Offenes und auf Erzählung zielendes Verfahren“ und „auf Zugzwänge des Erzählers“ zu?;;10;45, 46, 47, 48;;
+24;Zu welcher Interviewvarianten treffen diese Aussagen â€Offenes und auf ErzÃ¤hlung zielendes Verfahrenâ€œ und â€auf ZugzwÃ¤nge des ErzÃ¤hlersâ€œ zu?;;10;45, 46, 47, 48;;
 25;Wird ein Leitfaden in der Narrativ-biographischen Interview genutzt?;;10;49, 50, 51, 52;;
-26;Zu welchem Interviewform gehört die „einseitige Kommunikation“?;;10;53, 54, 55, 56;;
-27;In welchem Interviewvarianten, wird ein Leitfaden als Gedächtnisstütze eingesetzt?;;10;57, 58, 59, 60;;
-28;Wenn ein Interviewer strukturiert und nachfragend in ein Gespräch eingreift, welche Interview Variante wendet dieser an?;;10;61, 62, 63, 64;;
+26;Zu welchem Interviewform gehÃ¶rt die â€einseitige Kommunikationâ€œ?;;10;53, 54, 55, 56;;
+27;In welchem Interviewvarianten, wird ein Leitfaden als GedÃ¤chtnisstÃ¼tze eingesetzt?;;10;57, 58, 59, 60;;
+28;Wenn ein Interviewer strukturiert und nachfragend in ein GesprÃ¤ch eingreift, welche Interview Variante wendet dieser an?;;10;61, 62, 63, 64;;
 29;Wie ist der Ablauf eines Interviews?;;10;65, 66, 67;;
-30;Was ist bei der Kontaktaufnahme für das Interview wichtig?;;10;68, 69, 70, 71;;
+30;Was ist bei der Kontaktaufnahme fÃ¼r das Interview wichtig?;;10;68, 69, 70, 71;;
 41;Wann geht es nach der Erhebung der Daten weiter?;;10;72, 73, 74, 75;;
 42;Was sind die Grundbegriff der Inhaltsanalyse?;;10;76, 77, 78, 79;;
 43;Welche inhaltsanalytische Analyseverfahren gibt es?;;10;80, 81, 82, 83;;
-44;Welchem Analyseverfahren entspricht dieser Beschreibung: „Ziel der Analyse ist es, zu einzelnen fraglichen Textteilen (Begriffen, Sätzen...) zusätzliches Material heranzutragen, das das Verständnis erweitert, das die Textstelle erläutert, erklärt, ausdeutet.“;;10;84, 85, 86;;
-45;Wofür werden Kategorien verwendet?;;10;87, 88, 89, 90;;
+44;Welchem Analyseverfahren entspricht dieser Beschreibung: â€Ziel der Analyse ist es, zu einzelnen fraglichen Textteilen (Begriffen, SÃ¤tzen...) zusÃ¤tzliches Material heranzutragen, das das VerstÃ¤ndnis erweitert, das die Textstelle erlÃ¤utert, erklÃ¤rt, ausdeutet.â€œ;;10;84, 85, 86;;
+45;WofÃ¼r werden Kategorien verwendet?;;10;87, 88, 89, 90;;
 46;Welche Einheiten existieren in der Inhaltsanalyse?;;10;91, 92, 93, 94;;
 47;"Welche Einheit wird folgend beschrieben?
-“Textstelle, die mit einer bestimmten Kategorie in Verbindung gebracht wird (Verbindung von Textstelle und Kategorie)”";;10;95, 96, 97;;
+â€œTextstelle, die mit einer bestimmten Kategorie in Verbindung gebracht wird (Verbindung von Textstelle und Kategorie)â€";;10;95, 96, 97;;
 48;"Was wird folgend beschrieben?
-“Personen, welche Textstellen interpretieren und diesen bestimmte Kategorien zu ordnen”";;10;98, 99, 100;;
+â€œPersonen, welche Textstellen interpretieren und diesen bestimmte Kategorien zu ordnenâ€";;10;98, 99, 100;;
