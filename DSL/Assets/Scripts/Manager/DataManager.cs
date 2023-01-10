@@ -135,9 +135,8 @@ public class DataManager : MonoBehaviour
         {
             Delimiter = ";",
         };
-        string stationPath = Application.dataPath + "/Resources/Data/station.csv";
-        Debug.Log(stationPath);
-        using (var reader = new StreamReader(stationPath, Encoding.UTF7))
+
+        using (var reader = new StringReader(stations.text))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<StationMap>();
@@ -149,8 +148,8 @@ public class DataManager : MonoBehaviour
                 Stations.Add(item);
             }
         }
-        string questionPath = Application.dataPath + "/Resources/Data/question.csv";
-        using (var reader = new StreamReader(questionPath, Encoding.UTF7))
+
+        using (var reader = new StringReader(questions.text))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<QuestionMap>();
@@ -162,8 +161,8 @@ public class DataManager : MonoBehaviour
                 Questions.Add(item);
             }
         }
-        string answerPath = Application.dataPath + "/Resources/Data/answer.csv";
-        using (var reader = new StreamReader(answerPath, Encoding.UTF7))
+
+        using (var reader = new StringReader(answers.text))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<AnswerMap>();
@@ -174,8 +173,8 @@ public class DataManager : MonoBehaviour
                 Answers.Add(item);
             }
         }
-        string hintPath = Application.dataPath + "/Resources/Data/hint.csv";
-        using (var reader = new StreamReader(hintPath, Encoding.UTF7))
+
+        using (var reader = new StringReader(hints.text))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<HintMap>();
