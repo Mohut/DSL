@@ -135,8 +135,9 @@ public class DataManager : MonoBehaviour
         {
             Delimiter = ";",
         };
-
-        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(stations), Encoding.UTF7))
+        string stationPath = Application.dataPath + "/Resources/Data/station.csv";
+        Debug.Log(stationPath);
+        using (var reader = new StreamReader(stationPath, Encoding.UTF7))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<StationMap>();
@@ -144,10 +145,12 @@ public class DataManager : MonoBehaviour
 
             foreach (var item in records)
             {
+                Debug.Log(item.name);
                 Stations.Add(item);
             }
         }
-        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(questions), Encoding.UTF7))
+        string questionPath = Application.dataPath + "/Resources/Data/question.csv";
+        using (var reader = new StreamReader(questionPath, Encoding.UTF7))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<QuestionMap>();
@@ -159,7 +162,8 @@ public class DataManager : MonoBehaviour
                 Questions.Add(item);
             }
         }
-        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(answers), Encoding.UTF7))
+        string answerPath = Application.dataPath + "/Resources/Data/answer.csv";
+        using (var reader = new StreamReader(answerPath, Encoding.UTF7))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<AnswerMap>();
@@ -170,7 +174,8 @@ public class DataManager : MonoBehaviour
                 Answers.Add(item);
             }
         }
-        using (var reader = new StreamReader(AssetDatabase.GetAssetPath(hints), Encoding.UTF7))
+        string hintPath = Application.dataPath + "/Resources/Data/hint.csv";
+        using (var reader = new StreamReader(hintPath, Encoding.UTF7))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<HintMap>();
