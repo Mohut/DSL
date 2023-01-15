@@ -21,4 +21,5 @@ EditorBuildSettings:
     path: Assets/Scenes/QuestionScreen.unity
     guid: d82fd03c882bb0b49924c25202aa3afb
   m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 9cc2c2e6b84724040914cc13bea72bbc, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: b810a5819ea5c2f47b210eea6a990e3d, type: 2}

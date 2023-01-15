@@ -157,7 +157,7 @@ public class DataManager : MonoBehaviour
 
             foreach (var item in records)
             {
-                Debug.Log(item.text);
+                //Debug.Log(item.text);
                 Questions.Add(item);
             }
         }

@@ -1433,7 +1433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1103355908
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1555,7 +1555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1189084932
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1677,7 +1677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1199687754
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1799,7 +1799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1415464048
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2485,7 +2485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1907606400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2842,9 +2842,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputField: {fileID: 983908467}
-  button1: {fileID: 1189084933}
-  button2: {fileID: 1907606401}
-  button3: {fileID: 1199687755}
-  button4: {fileID: 1415464049}
-  button5: {fileID: 1103355909}
+  buttons:
+  - {fileID: 1189084933}
+  - {fileID: 1907606401}
+  - {fileID: 1199687755}
+  - {fileID: 1415464049}
+  - {fileID: 1103355909}
+  buttonTexts:
+  - {fileID: 257277218}
+  - {fileID: 1466472643}
+  - {fileID: 429711491}
+  - {fileID: 255060315}
+  - {fileID: 1090617798}
   homebutton: {fileID: 1615882403}
