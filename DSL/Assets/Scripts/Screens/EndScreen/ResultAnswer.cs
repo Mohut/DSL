@@ -25,8 +25,8 @@ public class ResultAnswer : MonoBehaviour
         {
             CreateNewAnswer(answer, space);
             contentTransform.sizeDelta = new Vector2(0, contentSize);
-            space -= 200;
-            contentSize += 200;
+            space -= 300;
+            contentSize += 300;
         }
     }
 

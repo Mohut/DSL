@@ -80,6 +80,9 @@ public class QuestionScreen : MonoBehaviour
         }
             
         slider.value = time / GameManager.Instance.CurrentStation.time;
+        
+        if(time <= 0)
+            SceneManager.LoadEndScreen();
     }
 
     private void SetAnswerQuestionText()
