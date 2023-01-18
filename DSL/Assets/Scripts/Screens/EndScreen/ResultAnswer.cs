@@ -25,8 +25,8 @@ public class ResultAnswer : MonoBehaviour
         {
             CreateNewAnswer(answer, space);
             contentTransform.sizeDelta = new Vector2(0, contentSize);
-            space -= 300;
-            contentSize += 300;
+            space -= 200;
+            contentSize += 200;
         }
     }
 
@@ -39,10 +39,10 @@ public class ResultAnswer : MonoBehaviour
         answerObject.transform.localPosition = spaceVector;
         
         FinishedQuestionInterface fqi = answerObject.GetComponent<FinishedQuestionInterface>();
-        fqi.QuestionNumber.text = answer.TaskNumber.ToString();
+        fqi.QuestionNumber.text = "Aufgabe: " + answer.TaskNumber;
         fqi.QuestionText.text = answer.Question.text;
         fqi.AnswerText.text = answer.Answer.text;
-        fqi.TipsUsed.text = answer.UsedTip.ToString();
+        fqi.TipsUsed.text = "Tipps: " + answer.UsedTip;
         if (answer.Right)
         {
             answerObject.GetComponent<Image>().color = Color.green;
@@ -51,5 +51,6 @@ public class ResultAnswer : MonoBehaviour
         {
             answerObject.GetComponent<Image>().color = Color.red;
         }
+        answerObject.transform.localScale = Vector3.one;
     }
 }
