@@ -29,7 +29,7 @@ public class TipScreen : MonoBehaviour
     {
         tipPanel.SetActive(state);
         
-        if (GameManager.Instance.PayedForHint)
+        if (GameManager.Instance.PaidForHint)
         {
             tipText.enabled = true;
             showTippButton.enabled = false;
@@ -60,7 +60,7 @@ public class TipScreen : MonoBehaviour
     public void ResetTip()
     {
         GameManager.Instance.UsedTips = 0;
-        GameManager.Instance.PayedForHint = false;
+        GameManager.Instance.PaidForHint = false;
         tipText.text = GameManager.Instance.CurrentHint.text;
         tipText.enabled = false;
         showTippButton.enabled = true;

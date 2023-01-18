@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private int _usedTips;
     private int _allUsedTips;
     private int _questionIteration;
-    private bool _payedForHint;
+    private bool _paidForHint;
     private List<ChosenAnswer> chosenAnswers = new List<ChosenAnswer>();
     #endregion
 
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public Hint CurrentHint { get => _currentHint; private set => _currentHint = value; }
     public int QuestionIteration { get => _questionIteration; set => _questionIteration = value; }
     public Group CurrentGroup { get => _currentGroup; set => _currentGroup = value; }
-    public bool PayedForHint { get => _payedForHint; set => _payedForHint = value; }
+    public bool PaidForHint { get => _paidForHint; set => _paidForHint = value; }
     public int UsedTips { get => _usedTips; set => _usedTips = value; }
     public int AllUsedTips { get => _allUsedTips; set => _allUsedTips = value; }
     public List<ChosenAnswer> ChosenAnswers { get => chosenAnswers; set => chosenAnswers = value; }
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         CurrentGroup.stationId = CurrentStation.id;
 
         QuestionIteration = 0;
-        PayedForHint = false;
+        PaidForHint = false;
     }
 
     // Selects the next question and returns if there is a new one
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
             CurrentQuestion = DataManager.Instance.GetQuestionById(CurrentStation.questionId[QuestionIteration]);
             CurrentAnswers = DataManager.Instance.GetAnswersById(CurrentQuestion.answerId.ToList());
             CurrentHint = DataManager.Instance.GetHintById(CurrentQuestion.hintId);
-            PayedForHint = false;
+            PaidForHint = false;
         }
 
         return true;
@@ -121,10 +121,10 @@ public class GameManager : MonoBehaviour
 
     public void PayForHint()
     {
-        if(!PayedForHint)
+        if(!PaidForHint)
         {
             CurrentGroup.points -= CurrentHint.price;
-            PayedForHint = true;
+            PaidForHint = true;
         }
     }
 
