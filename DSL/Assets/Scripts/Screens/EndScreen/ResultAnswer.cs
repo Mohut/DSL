@@ -9,6 +9,8 @@ public class ResultAnswer : MonoBehaviour
     [SerializeField] private GameObject parent;
     [SerializeField] private GameObject answerPrefab;
     [SerializeField] private RectTransform contentTransform;
+    [SerializeField] private Color red;
+    [SerializeField] private Color green;
 
     private void Start()
     {
@@ -45,11 +47,11 @@ public class ResultAnswer : MonoBehaviour
         fqi.TipsUsed.text = "Tipps: " + answer.UsedTip;
         if (answer.Right)
         {
-            answerObject.GetComponent<Image>().color = Color.green;
+            answerObject.GetComponent<Image>().color = green;
         }
         else
         {
-            answerObject.GetComponent<Image>().color = Color.red;
+            answerObject.GetComponent<Image>().color = red;
         }
         answerObject.transform.localScale = Vector3.one;
     }

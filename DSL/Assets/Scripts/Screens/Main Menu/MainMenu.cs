@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private Button singlePlayerButton;
     [SerializeField] private Button multiplayerButton;
     void OnEnable()
     {
