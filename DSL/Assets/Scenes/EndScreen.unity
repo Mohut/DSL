@@ -907,8 +907,8 @@ MonoBehaviour:
   parent: {fileID: 2044416580}
   answerPrefab: {fileID: 5645562347676500231, guid: 6fe872eaf802b6b408fd6d5254eb0a8e, type: 3}
   contentTransform: {fileID: 2044416581}
-  red: {r: 1, g: 0.7921569, b: 0.7921569, a: 1}
-  green: {r: 0.8, g: 1, b: 1, a: 1}
+  red: {fileID: 3286163911610860551, guid: dd16609c0894b7e4cbd7f531bc4671e2, type: 3}
+  green: {fileID: 3286163911610860551, guid: 6080b1cd250ccb94886deec881d3f4a5, type: 3}
 --- !u!1 &424366234
 GameObject:
   m_ObjectHideFlags: 0

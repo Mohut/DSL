@@ -376,7 +376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3512c3b3e88197d4597fbdaf87a5a900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  singlePlayerButton: {fileID: 0}
   multiplayerButton: {fileID: 559379269}
 --- !u!1 &559379267
 GameObject:
@@ -482,8 +481,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 2
+  m_Sprite: {fileID: 3286163911610860551, guid: a389af2b390e5b2458f4d982ab277bd0, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -491,7 +490,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.2
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &559379271
 CanvasRenderer:
   m_ObjectHideFlags: 0
