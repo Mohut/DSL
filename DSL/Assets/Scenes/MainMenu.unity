@@ -821,6 +821,26 @@ PrefabInstance:
       propertyPath: questions
       value: 
       objectReference: {fileID: 4900000, guid: a2c9282eced53244bb6b358e4c95eec6, type: 3}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.data[0]
+      value: Station
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.data[1]
+      value: Question
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.data[2]
+      value: Answer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.data[3]
+      value: Hint
+      objectReference: {fileID: 0}
     - target: {fileID: 6226247742550254887, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
       propertyPath: m_RootOrder
       value: 3
