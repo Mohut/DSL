@@ -11,6 +11,7 @@ public class Question
     [Name("id")]
     public int id;
 
+    [Optional]
     [Name("text")]
     public string text;
 
@@ -18,9 +19,11 @@ public class Question
     [Name("type")]
     public string type;
 
+    [Optional]
     [Name("points")]
     public int points;
 
+    [Optional]
     [Name("answerId")]
     [TypeConverter(typeof(ToIntArrayConverter))]
     public List<int> answerId{ get; set; }

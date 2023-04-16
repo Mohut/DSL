@@ -10,6 +10,12 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Sheets.v4;
+using Google.Apis.Util.Store;
+using System.Threading;
+
 
 public class DataManager : MonoBehaviour
 {
@@ -22,10 +28,14 @@ public class DataManager : MonoBehaviour
 
     [Header("Options")]
     public string saveFile = "/groupdata.json";
+    public List<string> sheetNames = new List<string>();
 
     public event Action OnGroupDataLoaded;
     public event Action<Group> OnNewGroupCreated;
     public event Action OnStationsLoaded;
+
+    private const string API_KEY = "AIzaSyCq7JJrU0bMNH2ZUvXWMYqeWlErYHE6JzQ";
+    private const string SPREADSHEET_ID = "1q6gBFNoM1Y0shjS_JSsihZ3UEHYWRNt9L_XiR_NewPk";
 
     private List<Station> _stations = new();
     private List<Question> _questions = new();
@@ -73,6 +83,11 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
+        foreach (string sheet in sheetNames)
+        {
+            DownloadSheet(sheet);
+        }
+
         CreateTestData();
         ReadGroupFile();
         ReadCSVFile();
@@ -91,6 +106,102 @@ public class DataManager : MonoBehaviour
         if (_isGroupFileDirty)
         {
             WriteFile();
+        }
+    }
+    #endregion
+
+    #region CSV Download Functions
+    private void DownloadSheet(string name)
+    {
+        string apiKey = API_KEY;
+        var initializer = new BaseClientService.Initializer()
+        {
+            ApiKey = apiKey,
+        };
+
+        var service = new SheetsService(initializer);
+
+        string spreadsheetId = SPREADSHEET_ID;
+        string range = name;
+
+        var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
+        var response = request.Execute();
+        Debug.Log("Saved as: " + Application.persistentDataPath + "/" + name + ".csv");
+        using (var writer = new StreamWriter(Application.persistentDataPath + "/" + name + ".csv"))
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Delimiter = ";",
+            };
+
+            var csv = new CsvWriter(writer, config);
+
+            foreach (var row in response.Values)
+            {
+                for (int i = 0; i < row.Count; i++)
+                {
+                    var cellValue = row[i]?.ToString();
+                    csv.WriteField(cellValue);
+                }
+                csv.NextRecord();
+            }
+        }
+    }
+
+    private void ReadCSVFile()
+    {
+        var config = new CsvConfiguration(CultureInfo.GetCultureInfoByIetfLanguageTag("de-DE"))
+        {
+            Delimiter = ";",
+            MissingFieldFound = null,
+    };
+
+        using (var reader = new StreamReader(Application.persistentDataPath + "/Station.csv"))
+        using (var csv = new CsvReader(reader, config))
+        {
+            csv.Context.RegisterClassMap<StationMap>();
+            var records = csv.GetRecords<Station>();
+
+            foreach (var item in records)
+            {
+                Stations.Add(item);
+            }
+        }
+
+        using (var reader = new StreamReader(Application.persistentDataPath + "/Question.csv"))
+        using (var csv = new CsvReader(reader, config))
+        {
+            csv.Context.RegisterClassMap<QuestionMap>();
+            var records = csv.GetRecords<Question>();
+
+            foreach (var item in records)
+            {
+                Questions.Add(item);
+            }
+        }
+
+        using (var reader = new StreamReader(Application.persistentDataPath + "/Answer.csv"))
+        using (var csv = new CsvReader(reader, config))
+        {
+            csv.Context.RegisterClassMap<AnswerMap>();
+            var records = csv.GetRecords<Answer>();
+
+            foreach (var item in records)
+            {
+                Answers.Add(item);
+            }
+        }
+
+        using (var reader = new StreamReader(Application.persistentDataPath + "/Hint.csv"))
+        using (var csv = new CsvReader(reader, config))
+        {
+            csv.Context.RegisterClassMap<HintMap>();
+            var records = csv.GetRecords<Hint>();
+
+            foreach (var item in records)
+            {
+                Hints.Add(item);
+            }
         }
     }
     #endregion
@@ -129,64 +240,6 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void ReadCSVFile()
-    {
-        var config = new CsvConfiguration(CultureInfo.GetCultureInfoByIetfLanguageTag("de-DE"))
-        {
-            Delimiter = ";",
-        };
-
-        using (var reader = new StringReader(stations.text))
-        using (var csv = new CsvReader(reader, config))
-        {
-            csv.Context.RegisterClassMap<StationMap>();
-            var records = csv.GetRecords<Station>();
-
-            foreach (var item in records)
-            {
-                Debug.Log(item.name);
-                Stations.Add(item);
-            }
-        }
-
-        using (var reader = new StringReader(questions.text))
-        using (var csv = new CsvReader(reader, config))
-        {
-            csv.Context.RegisterClassMap<QuestionMap>();
-            var records = csv.GetRecords<Question>();
-
-            foreach (var item in records)
-            {
-                //Debug.Log(item.text);
-                Questions.Add(item);
-            }
-        }
-
-        using (var reader = new StringReader(answers.text))
-        using (var csv = new CsvReader(reader, config))
-        {
-            csv.Context.RegisterClassMap<AnswerMap>();
-            var records = csv.GetRecords<Answer>();
-
-            foreach (var item in records)
-            {
-                Answers.Add(item);
-            }
-        }
-
-        using (var reader = new StringReader(hints.text))
-        using (var csv = new CsvReader(reader, config))
-        {
-            csv.Context.RegisterClassMap<HintMap>();
-            var records = csv.GetRecords<Hint>();
-
-            foreach (var item in records)
-            {
-                Hints.Add(item);
-            }
-        }
-    }
-
     private void WriteFile()
     {
         // Serialize the object into JSON and save string.
@@ -199,7 +252,7 @@ public class DataManager : MonoBehaviour
 
     #endregion
 
-    #region Get Data Functions#
+    #region Get Data Functions
     public Question GetQuestionById(int id)
     {
         return Questions.Find(x => x.id == id);
