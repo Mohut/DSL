@@ -33,9 +33,9 @@ public class QuestionScreen : MonoBehaviour
     [SerializeField] private Button button4;
     [SerializeField] private Image buttonImage4;
     [SerializeField] private Button homeButton;
-    [SerializeField] private Color grey;
-    [SerializeField] private Color green;
-    [SerializeField] private Color red;
+    [SerializeField] private Sprite purple;
+    [SerializeField] private Sprite green;
+    [SerializeField] private Sprite red;
 
     private float time;
     private int currentQuestionCount = 1;
@@ -155,15 +155,15 @@ public class QuestionScreen : MonoBehaviour
     private void ShowIfCorrect(Image button, bool correct)
     {
         if(correct)
-            button.color = green;
+            button.sprite = green;
         
         if(!correct)
-            button.color = red;
+            button.sprite = red;
     }
 
     private void MakeButtonGrey(Image button)
     {
-        button.color = grey;
+        button.sprite = purple;
     }
 
     IEnumerator ShowNextQuestion(Image button, int answerIndex)
