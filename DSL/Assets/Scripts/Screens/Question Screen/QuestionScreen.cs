@@ -9,6 +9,7 @@ public class QuestionScreen : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private TipScreen tipScreen;
     [SerializeField] private int answerDelay;
+    [SerializeField] private Button yesButton;
 
     [Header("Textfields")]
     [SerializeField] private TextMeshProUGUI groupName;
@@ -49,7 +50,7 @@ public class QuestionScreen : MonoBehaviour
         task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Count;
         questionPoints.text = GameManager.Instance.CurrentQuestion.points.ToString();
         
-        homeButton.onClick.AddListener(SceneManager.LoadMainMenu);
+        yesButton.onClick.AddListener(SceneManager.LoadMainMenu);
 
         time = GameManager.Instance.CurrentStation.time;
         
