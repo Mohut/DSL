@@ -10,13 +10,17 @@ public class BoolConverter : TypeConverter
     {
         bool cellBool = true;
 
-        if(text.ToLower() == "wahr")
+        if(text.ToLower() == "wahr" || text.ToLower() == "true")
         {
             cellBool = true;
         }
-        else if(text.ToLower() == "falsch")
+        else if(text.ToLower() == "falsch" || text.ToLower() == "false")
         {
             cellBool = false;
+        }
+        else
+        {
+            Debug.LogError("Wrong type convertion from " + text + " to bool. Error in google sheet data.");
         }
 
         return cellBool;
