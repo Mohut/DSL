@@ -5,6 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum QuestionType
+{
+    choice,
+    sequence
+}
+
 [Serializable]
 public class Question
 {
@@ -17,7 +23,7 @@ public class Question
 
     [Optional]
     [Name("type")]
-    public string type;
+    public QuestionType type;
 
     [Optional]
     [Name("points")]
@@ -38,7 +44,7 @@ public class QuestionMap : ClassMap<Question>
     {
         Map(m => m.id).Name("id");
         Map(m => m.text).Name("text");
-        Map(m => m.type).Name("type");
+        Map(m => m.type).Name("type").TypeConverter<QuestionTypeConverter>();
         Map(m => m.points).Name("points");
         Map(m => m.answerId).Name("answerId").TypeConverter<ToIntArrayConverter>();
     }
