@@ -43,7 +43,7 @@ public class SubjectButton : MonoBehaviour
                 SceneManager.LoadQuestionScreen();
             });
 
-            yPosition -= 150;
+            yPosition -= 60;
         }
     }
 }
