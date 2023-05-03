@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class OderItemInterface : MonoBehaviour
+public class SequenceItemInterface : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI answerTMP;
     [SerializeField] private TextMeshProUGUI numberTMP;

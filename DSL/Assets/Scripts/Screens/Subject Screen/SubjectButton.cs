@@ -15,6 +15,7 @@ public class SubjectButton : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private List<TextMeshProUGUI> buttonTexts;
     [SerializeField] private Button homebutton;
+    [SerializeField] private RectTransform contentTransform;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class SubjectButton : MonoBehaviour
     private void CreateSubjectButtons()
     {
         int yPosition = -25;
+        float contentSize = contentTransform.rect.height;
 
         for (int i = 0; i < DataManager.Instance.Stations.Count; i++)
         {
@@ -44,6 +46,9 @@ public class SubjectButton : MonoBehaviour
             });
 
             yPosition -= 60;
+            contentSize += 60;
         }
+
+        contentTransform.sizeDelta = new Vector2(0, contentSize + 30);
     }
 }

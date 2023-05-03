@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestionScreen : MonoBehaviour
 {
-    [SerializeField] private Slider slider;
     [SerializeField] private TipScreen tipScreen;
     [SerializeField] private int answerDelay;
     [SerializeField] private Button yesButton;
+    [SerializeField] private GameObject choiceGameObject;
+    [SerializeField] private GameObject sequenceGameObject;
 
     [Header("Textfields")]
     [SerializeField] private TextMeshProUGUI groupName;
@@ -38,23 +40,23 @@ public class QuestionScreen : MonoBehaviour
     [SerializeField] private Sprite green;
     [SerializeField] private Sprite red;
 
+    [Header("Sequence")]
+    [SerializeField] private Transform sequenceItemParent;
+    [SerializeField] private GameObject sequenceItem;
+    [SerializeField] private RectTransform sequenceContentTransform;
+    private List<TextMeshProUGUI> numberTMPList = new List<TextMeshProUGUI>();
+
     private float time;
     private int currentQuestionCount = 1;
+
     void Start()
     {
+        SetUpUpperPanel();
         GameManager.Instance.ResetUsedTips();
-        
-        groupName.text = GameManager.Instance.CurrentGroup.name;
-        subject.text = GameManager.Instance.CurrentStation.name;
-        question.text = GameManager.Instance.CurrentQuestion.text;
-        task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Count;
-        questionPoints.text = GameManager.Instance.CurrentQuestion.points.ToString();
-        
         yesButton.onClick.AddListener(SceneManager.LoadMainMenu);
-
         time = GameManager.Instance.CurrentStation.time;
-        
-        SetAnswerQuestionText();
+
+        SetAnswerAndQuestionText();
         SetButtonMethods();
     }
 
@@ -67,78 +69,81 @@ public class QuestionScreen : MonoBehaviour
         homeButton.onClick.RemoveAllListeners();
     }
 
-    private void Update()
+    private void SetUpUpperPanel()
     {
-        time -= Time.deltaTime;
-        
-        if (time < 60)
-        {
-            timeText.text = "Weniger als 1 Min.";
-        }
-        else
-        {
-            timeText.text = (int)time / 60 + " Min.";
-        }
-            
-        slider.value = time / GameManager.Instance.CurrentStation.time;
-        
-        if(time <= 0)
-            SceneManager.LoadEndScreen();
+        groupName.text = GameManager.Instance.CurrentGroup.name;
+        subject.text = GameManager.Instance.CurrentStation.name;
+        question.text = GameManager.Instance.CurrentQuestion.text;
+        task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Count;
+        questionPoints.text = GameManager.Instance.CurrentQuestion.points.ToString();
     }
 
-    private void SetAnswerQuestionText()
+    private void SetAnswerAndQuestionText()
+    {
+        if (GameManager.Instance.CurrentQuestion.type.Equals(QuestionType.choice))
+        {
+            choiceGameObject.SetActive(true);
+            sequenceGameObject.SetActive(false);
+            SetChoiceQuestionText();
+        }
+
+        if (GameManager.Instance.CurrentQuestion.type.Equals(QuestionType.sequence))
+        {
+            choiceGameObject.SetActive(false);
+            sequenceGameObject.SetActive(true);
+            SetSequenceButtons();
+        }
+    }
+
+    private void SetChoiceQuestionText()
     {
         question.text = GameManager.Instance.CurrentQuestion.text;
         
+        // Answer 1
         if(GameManager.Instance.CurrentAnswers.Count >= 1)
             answer1.text = GameManager.Instance.CurrentAnswers[0].text;
         
+        // Answer 2
         if(GameManager.Instance.CurrentAnswers.Count >= 2)
             answer2.text = GameManager.Instance.CurrentAnswers[1].text;
         
+        // Answer 3
+        button3.interactable = GameManager.Instance.CurrentAnswers.Count >= 3;
+        buttonImage3.enabled = GameManager.Instance.CurrentAnswers.Count >= 3;
+        answer3.enabled = GameManager.Instance.CurrentAnswers.Count >= 3;
         if (GameManager.Instance.CurrentAnswers.Count >= 3)
-        {
-            button3.interactable = true;
-            buttonImage3.enabled = true;
-            answer3.enabled = true;
             answer3.text = GameManager.Instance.CurrentAnswers[2].text;
-        }
-        else
-        {
-            button3.interactable = false;
-            buttonImage3.enabled = false;
-            answer3.enabled = false;
-        }
 
+        // Answer 4
+        button4.interactable = GameManager.Instance.CurrentAnswers.Count >= 4;
+        buttonImage4.enabled = GameManager.Instance.CurrentAnswers.Count >= 4;
+        answer4.enabled = GameManager.Instance.CurrentAnswers.Count >= 4;
         if (GameManager.Instance.CurrentAnswers.Count >= 4)
-        {
-            button4.interactable = true;
-            buttonImage4.enabled = true;
-            answer4.enabled = true;
             answer4.text = GameManager.Instance.CurrentAnswers[3].text;
-        }
-        else
-        {
-            button4.interactable = false;
-            buttonImage4.enabled = false;
-            answer4.enabled = false;
-        }
-            
     }
 
-    private bool CheckAnswer(int index)
+    private void SetSequenceButtons()
     {
-        if (GameManager.Instance.CurrentAnswers[index].isCorrect)
+        int offset = 0;
+        float contentSize = 0;
+        
+        foreach (Answer answer in GameManager.Instance.CurrentAnswers)
         {
-            GameManager.Instance.CurrentGroup.points += GameManager.Instance.CurrentQuestion.points;
-            currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
-            return true;
-        }
+            GameObject sequenceGameObject = Instantiate(sequenceItem, transform.position, quaternion.identity);
+            SequenceItemInterface sequenceItemInterface = sequenceGameObject.GetComponent<SequenceItemInterface>();
+            sequenceItemInterface.AnswerTMP.SetText(answer.text);
+            numberTMPList.Add(sequenceItemInterface.NumberTMP);
 
-        return false;
+            sequenceGameObject.transform.parent = sequenceItemParent;
+            sequenceGameObject.transform.localPosition = new Vector3(0, offset, 0);
+            sequenceGameObject.transform.localScale = Vector3.one;
+            offset -= 60;
+            contentSize += 60;
+        }
+        sequenceContentTransform.sizeDelta = new Vector2(0, contentSize + 30);
     }
 
-    private void UpdateCurrentQuestionData()
+    private void UpdateCurrentQuestionDataTexts()
     {
         currentQuestionCount++;
         task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Count;
@@ -151,6 +156,22 @@ public class QuestionScreen : MonoBehaviour
         {
             SceneManager.LoadEndScreen();
         }
+        
+        SetAnswerAndQuestionText();
+        MakeButtonGrey();
+        tipScreen.ResetTip();
+        UpdateCurrentQuestionDataTexts();
+    }
+    
+    private bool CheckAnswer(int index)
+    {
+        if (GameManager.Instance.CurrentAnswers[index].isCorrect)
+        {
+            GameManager.Instance.CurrentGroup.points += GameManager.Instance.CurrentQuestion.points;
+            currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
+            return true;
+        }
+        return false;
     }
 
     private void ShowIfCorrect(Image button, bool correct)
@@ -162,9 +183,12 @@ public class QuestionScreen : MonoBehaviour
             button.sprite = red;
     }
 
-    private void MakeButtonGrey(Image button)
+    private void MakeButtonGrey()
     {
-        button.sprite = purple;
+        buttonImage1.sprite = purple;
+        buttonImage2.sprite = purple;
+        buttonImage3.sprite = purple;
+        buttonImage4.sprite = purple;
     }
 
     IEnumerator ShowNextQuestion(Image button, int answerIndex)
@@ -184,39 +208,21 @@ public class QuestionScreen : MonoBehaviour
         button4.interactable = true;
         
         LoadNewQuestion();
-        MakeButtonGrey(button);
-        tipScreen.ResetTip();
-        SetAnswerQuestionText();
-        UpdateCurrentQuestionData();
     }
 
     private void SetButtonMethods()
     {
-        button1.onClick.AddListener(() =>
+        List<Button> answerButtons = new List<Button>() {button1, button2, button3, button4};
+
+        for (int i = 0; i < answerButtons.Count; i++)
         {
-            GameManager.Instance.AdChosenAnswer(currentQuestionCount, 0, CheckAnswer(0));
-            StartCoroutine(ShowNextQuestion(buttonImage1,0));
-            tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
-        });
-        
-        button2.onClick.AddListener( () => {
-            GameManager.Instance.AdChosenAnswer(currentQuestionCount, 1, CheckAnswer(1));
-            StartCoroutine(ShowNextQuestion(buttonImage2, 1));
-            tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
-        });
-        
-        button3.onClick.AddListener(() =>
-        {
-            GameManager.Instance.AdChosenAnswer(currentQuestionCount, 2, CheckAnswer(2));
-            StartCoroutine(ShowNextQuestion(buttonImage3, 2));
-            tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
-        });
-        
-        button4.onClick.AddListener(() =>
-        {
-            GameManager.Instance.AdChosenAnswer(currentQuestionCount, 3, CheckAnswer(3));
-            StartCoroutine(ShowNextQuestion(buttonImage4, 3));
-            tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
-        });
+            int index = i;
+            answerButtons[i].onClick.AddListener(() =>
+            {
+                GameManager.Instance.AdChosenAnswer(currentQuestionCount, index, CheckAnswer(index));
+                StartCoroutine(ShowNextQuestion(answerButtons[index].GetComponent<Image>(), index));
+                tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
+            });
+        }
     }
 }
