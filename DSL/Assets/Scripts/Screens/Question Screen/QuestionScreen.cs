@@ -39,22 +39,29 @@ public class QuestionScreen : MonoBehaviour
     [SerializeField] private Sprite purple;
     [SerializeField] private Sprite green;
     [SerializeField] private Sprite red;
+    List<Button> answerButtons;
 
     [Header("Sequence")]
     [SerializeField] private Transform sequenceItemParent;
     [SerializeField] private GameObject sequenceItem;
     [SerializeField] private RectTransform sequenceContentTransform;
-    private List<TextMeshProUGUI> numberTMPList = new List<TextMeshProUGUI>();
+    private Dictionary<TextMeshProUGUI, int> numberTMPList = new Dictionary<TextMeshProUGUI, int>();
+    private List<Image> sequenceImages = new List<Image>();
+    private List<Button> sequenceButtons = new List<Button>();
+    private List<GameObject> sequenceObjects = new List<GameObject>();
+    private int sequenceCounter;
 
     private float time;
     private int currentQuestionCount = 1;
 
     void Start()
     {
+        answerButtons = new List<Button>() { button1, button2, button3, button4 };
         SetUpUpperPanel();
         GameManager.Instance.ResetUsedTips();
         yesButton.onClick.AddListener(SceneManager.LoadMainMenu);
         time = GameManager.Instance.CurrentStation.time;
+        homeButton.onClick.AddListener(SceneManager.LoadMainMenu);
 
         SetAnswerAndQuestionText();
         SetButtonMethods();
@@ -66,6 +73,7 @@ public class QuestionScreen : MonoBehaviour
         button2.onClick.RemoveAllListeners();
         button3.onClick.RemoveAllListeners();
         button4.onClick.RemoveAllListeners();
+        homeButton.onClick.RemoveAllListeners();
         homeButton.onClick.RemoveAllListeners();
     }
 
@@ -85,6 +93,10 @@ public class QuestionScreen : MonoBehaviour
             choiceGameObject.SetActive(true);
             sequenceGameObject.SetActive(false);
             SetChoiceQuestionText();
+            button1.interactable = true;
+            button2.interactable = true;
+            button3.interactable = true;
+            button4.interactable = true;
         }
 
         if (GameManager.Instance.CurrentQuestion.type.Equals(QuestionType.sequence))
@@ -132,15 +144,33 @@ public class QuestionScreen : MonoBehaviour
             GameObject sequenceGameObject = Instantiate(sequenceItem, transform.position, quaternion.identity);
             SequenceItemInterface sequenceItemInterface = sequenceGameObject.GetComponent<SequenceItemInterface>();
             sequenceItemInterface.AnswerTMP.SetText(answer.text);
-            numberTMPList.Add(sequenceItemInterface.NumberTMP);
+            
+            sequenceObjects.Add(sequenceGameObject);
+            numberTMPList.Add(sequenceItemInterface.NumberTMP, -1);
+            sequenceImages.Add(sequenceItemInterface.SequenceImage);
+            sequenceButtons.Add(sequenceItemInterface.Button);
 
             sequenceGameObject.transform.parent = sequenceItemParent;
             sequenceGameObject.transform.localPosition = new Vector3(0, offset, 0);
             sequenceGameObject.transform.localScale = Vector3.one;
             offset -= 60;
             contentSize += 60;
+            
+            sequenceItemInterface.Button.onClick.AddListener(() =>
+            {
+                ClickedOnSequence(sequenceItemInterface.NumberTMP, sequenceItemInterface.Button);
+            });
         }
         sequenceContentTransform.sizeDelta = new Vector2(0, contentSize + 30);
+    }
+
+    private void ClickedOnSequence(TextMeshProUGUI TMP, Button button)
+    {
+        int numberToShow = sequenceCounter + 1;
+        TMP.SetText(numberToShow.ToString());
+        numberTMPList[TMP] = sequenceCounter;
+        button.interactable = false;
+        sequenceCounter++;
     }
 
     private void UpdateCurrentQuestionDataTexts()
@@ -176,11 +206,23 @@ public class QuestionScreen : MonoBehaviour
 
     private void ShowIfCorrect(Image button, bool correct)
     {
+        button1.interactable = false;
+        button2.interactable = false;
+        button3.interactable = false;
+        button4.interactable = false;
+        
         if(correct)
             button.sprite = green;
-        
-        if(!correct)
+
+        if (!correct)
+        {
             button.sprite = red;
+            for(int i = 0; i < GameManager.Instance.CurrentAnswers.Count; i++)
+            {
+                if (CheckAnswer(i))
+                    answerButtons[i].GetComponent<Image>().sprite = green;
+            }
+        }
     }
 
     private void MakeButtonGrey()
@@ -191,36 +233,32 @@ public class QuestionScreen : MonoBehaviour
         buttonImage4.sprite = purple;
     }
 
-    IEnumerator ShowNextQuestion(Image button, int answerIndex)
+    public void ShowNextQuestion()
     {
-        ShowIfCorrect(button, GameManager.Instance.CurrentAnswers[answerIndex].isCorrect);
+        sequenceObjects.Clear();
+        numberTMPList.Clear();
+        sequenceImages.Clear();
         
-        button1.interactable = false;
-        button2.interactable = false;
-        button3.interactable = false;
-        button4.interactable = false;
+        for (int i = 0; i < sequenceObjects.Count; i++)
+        {
+            GameObject sequence = sequenceObjects[i];
+            sequenceButtons[i].onClick.RemoveAllListeners();
+            sequenceObjects.Remove(sequence);
+            Destroy(sequence);
+        }
 
-        yield return new WaitForSeconds(answerDelay);
-        
-        button1.interactable = true;
-        button2.interactable = true;
-        button3.interactable = true;
-        button4.interactable = true;
-        
         LoadNewQuestion();
     }
 
     private void SetButtonMethods()
     {
-        List<Button> answerButtons = new List<Button>() {button1, button2, button3, button4};
-
         for (int i = 0; i < answerButtons.Count; i++)
         {
             int index = i;
             answerButtons[i].onClick.AddListener(() =>
             {
                 GameManager.Instance.AdChosenAnswer(currentQuestionCount, index, CheckAnswer(index));
-                StartCoroutine(ShowNextQuestion(answerButtons[index].GetComponent<Image>(), index));
+                ShowIfCorrect(answerButtons[index].GetComponent<Image>(), GameManager.Instance.CurrentAnswers[index].isCorrect);
                 tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
             });
         }
