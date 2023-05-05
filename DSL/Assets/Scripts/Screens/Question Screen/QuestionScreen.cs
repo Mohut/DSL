@@ -1,14 +1,16 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using TMPro;
+using System.Linq;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Random = System.Random;
+using TextMeshProUGUI = TMPro.TextMeshProUGUI;
 public class QuestionScreen : MonoBehaviour
 {
     [SerializeField] private TipScreen tipScreen;
-    [SerializeField] private int answerDelay;
+    [SerializeField] private Button continueButton;
     [SerializeField] private Button yesButton;
     [SerializeField] private GameObject choiceGameObject;
     [SerializeField] private GameObject sequenceGameObject;
@@ -17,7 +19,6 @@ public class QuestionScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI groupName;
     [SerializeField] private TextMeshProUGUI task;
     [SerializeField] private TextMeshProUGUI subject;
-    [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private TextMeshProUGUI question;
     [SerializeField] private TextMeshProUGUI questionPoints;
     [SerializeField] private TextMeshProUGUI currentScoreText;
@@ -45,11 +46,14 @@ public class QuestionScreen : MonoBehaviour
     [SerializeField] private Transform sequenceItemParent;
     [SerializeField] private GameObject sequenceItem;
     [SerializeField] private RectTransform sequenceContentTransform;
+    [SerializeField] private GameObject clearButton;
+    //Vector2(Answer, Correct)
     private Dictionary<TextMeshProUGUI, int> numberTMPList = new Dictionary<TextMeshProUGUI, int>();
     private List<Image> sequenceImages = new List<Image>();
     private List<Button> sequenceButtons = new List<Button>();
     private List<GameObject> sequenceObjects = new List<GameObject>();
     private int sequenceCounter;
+    private Dictionary<string, int> shuffledAnswers = new Dictionary<string, int>();
 
     private float time;
     private int currentQuestionCount = 1;
@@ -76,6 +80,18 @@ public class QuestionScreen : MonoBehaviour
         homeButton.onClick.RemoveAllListeners();
         homeButton.onClick.RemoveAllListeners();
     }
+    
+    public void Shuffle()  
+    {  
+        Random rand = new Random();
+        for (int i = 0; i < GameManager.Instance.CurrentAnswers.Count; i++)
+        {
+            shuffledAnswers.Add(GameManager.Instance.CurrentAnswers[i].text, i);
+        }
+        Dictionary<string, int> shuffled = shuffledAnswers.OrderBy(r => rand.Next())
+            .ToDictionary(item => item.Key, item => item.Value);
+        shuffledAnswers = shuffled;
+    }
 
     private void SetUpUpperPanel()
     {
@@ -83,7 +99,7 @@ public class QuestionScreen : MonoBehaviour
         subject.text = GameManager.Instance.CurrentStation.name;
         question.text = GameManager.Instance.CurrentQuestion.text;
         task.text = "Aufgabe " + currentQuestionCount + " / " + GameManager.Instance.CurrentStation.questionId.Count;
-        questionPoints.text = GameManager.Instance.CurrentQuestion.points.ToString();
+        questionPoints.text = "Punkte: " + GameManager.Instance.CurrentQuestion.points;
     }
 
     private void SetAnswerAndQuestionText()
@@ -93,6 +109,7 @@ public class QuestionScreen : MonoBehaviour
             choiceGameObject.SetActive(true);
             sequenceGameObject.SetActive(false);
             SetChoiceQuestionText();
+            clearButton.SetActive(false);
             button1.interactable = true;
             button2.interactable = true;
             button3.interactable = true;
@@ -101,8 +118,10 @@ public class QuestionScreen : MonoBehaviour
 
         if (GameManager.Instance.CurrentQuestion.type.Equals(QuestionType.sequence))
         {
+            clearButton.SetActive(true);
             choiceGameObject.SetActive(false);
             sequenceGameObject.SetActive(true);
+            Shuffle();
             SetSequenceButtons();
         }
     }
@@ -138,32 +157,39 @@ public class QuestionScreen : MonoBehaviour
     {
         int offset = 0;
         float contentSize = 0;
+        int index = 0;
         
-        foreach (Answer answer in GameManager.Instance.CurrentAnswers)
+        foreach (KeyValuePair<string, int> sequenceText in shuffledAnswers)
         {
-            GameObject sequenceGameObject = Instantiate(sequenceItem, transform.position, quaternion.identity);
-            SequenceItemInterface sequenceItemInterface = sequenceGameObject.GetComponent<SequenceItemInterface>();
-            sequenceItemInterface.AnswerTMP.SetText(answer.text);
             
-            sequenceObjects.Add(sequenceGameObject);
+            GameObject newSequenceGameObject = Instantiate(sequenceItem, sequenceItemParent.position, quaternion.identity);
+            SequenceItemInterface sequenceItemInterface = newSequenceGameObject.GetComponent<SequenceItemInterface>();
+            sequenceItemInterface.AnswerTMP.SetText(sequenceText.Key);
+            
+            sequenceObjects.Add(newSequenceGameObject);
             numberTMPList.Add(sequenceItemInterface.NumberTMP, -1);
             sequenceImages.Add(sequenceItemInterface.SequenceImage);
             sequenceButtons.Add(sequenceItemInterface.Button);
+            
+            newSequenceGameObject.transform.SetParent(sequenceItemParent);
+            newSequenceGameObject.transform.localScale = Vector3.one;
+            newSequenceGameObject.transform.localPosition = new Vector3(0, offset, 0);
 
-            sequenceGameObject.transform.parent = sequenceItemParent;
-            sequenceGameObject.transform.localPosition = new Vector3(0, offset, 0);
-            sequenceGameObject.transform.localScale = Vector3.one;
             offset -= 60;
             contentSize += 60;
-            
+
             sequenceItemInterface.Button.onClick.AddListener(() =>
             {
                 ClickedOnSequence(sequenceItemInterface.NumberTMP, sequenceItemInterface.Button);
             });
+            
+            index++;
         }
         sequenceContentTransform.sizeDelta = new Vector2(0, contentSize + 30);
+        
+        ClearSequence();
     }
-
+    
     private void ClickedOnSequence(TextMeshProUGUI TMP, Button button)
     {
         int numberToShow = sequenceCounter + 1;
@@ -171,6 +197,50 @@ public class QuestionScreen : MonoBehaviour
         numberTMPList[TMP] = sequenceCounter;
         button.interactable = false;
         sequenceCounter++;
+        if(CheckIfContinueIsPossible())
+            CheckSequenceAnswers();
+    }
+
+    private void CheckSequenceAnswers()
+    {
+        bool everyThingRight = true;
+        
+        foreach (Answer answer in GameManager.Instance.CurrentAnswers)
+        {
+            foreach (GameObject gameObject in sequenceObjects)
+            {
+                SequenceItemInterface sequenceItemInterface = gameObject.GetComponent<SequenceItemInterface>();
+                if (sequenceItemInterface.AnswerTMP.text.Equals(answer.text))
+                {
+                    if (GameManager.Instance.CurrentAnswers.IndexOf(answer) ==
+                        Convert.ToInt16(sequenceItemInterface.NumberTMP.text) -1)
+                    {
+                        sequenceItemInterface.SequenceImage.sprite = green;
+                    }
+                    else
+                    {
+                        sequenceItemInterface.SequenceImage.sprite = red;
+                        everyThingRight = false;
+                    }
+                }
+            }
+        }
+        
+        GameManager.Instance.AdChosenAnswer(currentQuestionCount, everyThingRight);
+    }
+
+    private bool CheckIfContinueIsPossible()
+    {
+        bool continuePossible = true;
+
+        foreach (int number in numberTMPList.Values.ToList())
+        {
+            if (number == -1)
+                continuePossible = false;
+        }
+
+        continueButton.interactable = continuePossible;
+        return continuePossible;
     }
 
     private void UpdateCurrentQuestionDataTexts()
@@ -191,6 +261,7 @@ public class QuestionScreen : MonoBehaviour
         MakeButtonGrey();
         tipScreen.ResetTip();
         UpdateCurrentQuestionDataTexts();
+        continueButton.interactable = false;
     }
     
     private bool CheckAnswer(int index)
@@ -234,19 +305,24 @@ public class QuestionScreen : MonoBehaviour
     }
 
     public void ShowNextQuestion()
-    {
-        sequenceObjects.Clear();
+    { 
         numberTMPList.Clear();
         sequenceImages.Clear();
-        
-        for (int i = 0; i < sequenceObjects.Count; i++)
-        {
-            GameObject sequence = sequenceObjects[i];
-            sequenceButtons[i].onClick.RemoveAllListeners();
-            sequenceObjects.Remove(sequence);
-            Destroy(sequence);
-        }
+        sequenceContentTransform.sizeDelta = Vector2.zero;
 
+        foreach (Button button in sequenceButtons)
+        {
+            button.onClick.RemoveAllListeners();
+        }
+        
+        foreach (GameObject sequenceObject in sequenceObjects)
+        {
+            Destroy(sequenceObject);
+        }
+        
+        sequenceObjects.Clear();
+        shuffledAnswers.Clear();
+        sequenceButtons.Clear();
         LoadNewQuestion();
     }
 
@@ -257,10 +333,28 @@ public class QuestionScreen : MonoBehaviour
             int index = i;
             answerButtons[i].onClick.AddListener(() =>
             {
-                GameManager.Instance.AdChosenAnswer(currentQuestionCount, index, CheckAnswer(index));
+                GameManager.Instance.AdChosenAnswer(currentQuestionCount, CheckAnswer(index));
                 ShowIfCorrect(answerButtons[index].GetComponent<Image>(), GameManager.Instance.CurrentAnswers[index].isCorrect);
                 tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
+                continueButton.interactable = true;
             });
         }
+    }
+
+    public void ClearSequence()
+    {
+        sequenceCounter = 0;
+        foreach (Button button in sequenceButtons)
+        {
+            button.interactable = true;
+        }
+
+        foreach (TextMeshProUGUI key in numberTMPList.Keys.ToList())
+        {
+            numberTMPList[key] = -1;
+            key.SetText("-");
+        }
+
+        continueButton.interactable = false;
     }
 }
