@@ -173,7 +173,7 @@ public class QuestionScreen : MonoBehaviour
             
             newSequenceGameObject.transform.SetParent(sequenceItemParent);
             newSequenceGameObject.transform.localScale = Vector3.one;
-            newSequenceGameObject.transform.localPosition = new Vector3(0, offset, 0);
+            sequenceItemInterface.RectTransform.localPosition = new Vector3(0, offset, 0);
 
             offset -= 60;
             contentSize += 60;
