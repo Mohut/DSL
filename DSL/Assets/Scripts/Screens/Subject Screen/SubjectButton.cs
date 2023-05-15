@@ -15,6 +15,7 @@ public class SubjectButton : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private List<TextMeshProUGUI> buttonTexts;
     [SerializeField] private Button homebutton;
+    [SerializeField] private RectTransform contentTransform;
 
     private void Start()
     {
@@ -25,13 +26,14 @@ public class SubjectButton : MonoBehaviour
     private void CreateSubjectButtons()
     {
         int yPosition = -25;
+        float contentSize = contentTransform.rect.height;
 
         for (int i = 0; i < DataManager.Instance.Stations.Count; i++)
         {
             Vector3 buttonPosition = new Vector3(0, yPosition, 0);
             
             GameObject subjectButton = Instantiate(subjectButtonPrefab, parentTransform.position, quaternion.identity);
-            subjectButton.transform.parent = parentTransform;
+            subjectButton.transform.SetParent(parentTransform);
             subjectButton.GetComponent<SubjectButtonInterface>().RectTransform.localPosition = buttonPosition;
             subjectButton.GetComponent<SubjectButtonInterface>().SubjectTitleTMP.text = DataManager.Instance.Stations[i].name;
             
@@ -43,7 +45,10 @@ public class SubjectButton : MonoBehaviour
                 SceneManager.LoadQuestionScreen();
             });
 
-            yPosition -= 150;
+            yPosition -= 60;
+            contentSize += 60;
         }
+
+        contentTransform.sizeDelta = new Vector2(0, contentSize + 30);
     }
 }

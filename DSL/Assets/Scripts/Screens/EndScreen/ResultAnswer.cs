@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,7 +34,7 @@ public class ResultAnswer : MonoBehaviour
     private void CreateNewAnswer(ChosenAnswer answer, int space)
     {
         GameObject answerObject = Instantiate(answerPrefab, parent.transform.position, quaternion.identity);
-        answerObject.transform.parent = parent.transform;
+        answerObject.transform.SetParent(parent.transform);
         
         Vector3 spaceVector = new Vector3(0, space, 0);
         answerObject.transform.localPosition = spaceVector;
@@ -43,7 +42,6 @@ public class ResultAnswer : MonoBehaviour
         FinishedQuestionInterface fqi = answerObject.GetComponent<FinishedQuestionInterface>();
         fqi.QuestionNumber.text = "Aufgabe: " + answer.TaskNumber;
         fqi.QuestionText.text = answer.Question.text;
-        fqi.AnswerText.text = answer.Answer.text;
         fqi.TipsUsed.text = "Tipps: " + answer.UsedTip;
         if (answer.Right)
         {

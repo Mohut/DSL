@@ -147,8 +147,8 @@ public class GameManager : MonoBehaviour
         chosenAnswers.Clear();
     }
 
-    public void AdChosenAnswer(int taskNumber, int answerIndex, bool right)
+    public void AdChosenAnswer(int taskNumber, bool right)
     {
-        chosenAnswers.Add(new ChosenAnswer(taskNumber, _currentQuestion, _currentAnswers[answerIndex], right,  _usedTips));
+        chosenAnswers.Add(new ChosenAnswer(taskNumber, _currentQuestion, right,  _usedTips));
     }
 }
