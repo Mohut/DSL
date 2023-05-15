@@ -15,7 +15,10 @@ using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Util.Store;
 using System.Threading;
-
+using Google.Apis.Sheets.v4.Data;
+using Google.Apis.Upload;
+using System.Threading.Tasks;
+using Google.Apis.Drive.v3;
 
 public class DataManager : MonoBehaviour
 {
@@ -36,12 +39,13 @@ public class DataManager : MonoBehaviour
 
     private const string API_KEY = "AIzaSyCq7JJrU0bMNH2ZUvXWMYqeWlErYHE6JzQ";
     private const string SPREADSHEET_ID = "1q6gBFNoM1Y0shjS_JSsihZ3UEHYWRNt9L_XiR_NewPk";
-
+    private const string FOLDER_ID = "1IVtPswTMODFEBXWC4DPqIc-K849gcz3z";
     private List<Station> _stations = new();
     private List<Question> _questions = new();
     private List<Answer> _answers = new();
     private List<Hint> _hints = new();
     private List<Group> _groups = new();
+    private List<Result> _results = new();
 
     // bool to check if we need to rewrite the group file
     private bool _isGroupFileDirty;
@@ -60,6 +64,7 @@ public class DataManager : MonoBehaviour
     public List<Hint> Hints { get => _hints; private set => _hints = value; }
     public List<Group> Groups { get => _groups; private set => _groups = value; }
     public Group CurrentGroup { get => currentGroup; private set => currentGroup = value; }
+    public List<Result> Results { get => _results; set => _results = value; }
     #endregion
 
     #region Monobehavior Functions
@@ -91,6 +96,7 @@ public class DataManager : MonoBehaviour
         CreateTestData();
         ReadGroupFile();
         ReadCSVFile();
+        UploadSheet();
     }
 
     private void Update()
@@ -144,6 +150,33 @@ public class DataManager : MonoBehaviour
                     csv.WriteField(cellValue);
                 }
                 csv.NextRecord();
+            }
+        }
+    }
+
+    private void UploadSheet()
+    {
+        var service = new DriveService(new BaseClientService.Initializer
+        {
+            ApiKey = API_KEY,
+        });
+
+        var fileContent = "This is the file content";
+        var fileBytes = System.Text.Encoding.UTF8.GetBytes(fileContent);
+
+        using (var stream = new MemoryStream(fileBytes))
+        {
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = "myFile.txt",
+                Parents = new[] { FOLDER_ID },
+            };
+
+            var uploadRequest = service.Files.Create(fileMetadata, stream, "text/plain");
+            uploadRequest.Upload();
+            if (uploadRequest.ResponseBody != null)
+            {
+               Debug.Log("Uploaded file ID: " + uploadRequest.ResponseBody.Id);
             }
         }
     }
@@ -409,6 +442,13 @@ public class DataManager : MonoBehaviour
         */
     }
 
+    #endregion
+
+    #region Result
+    public void SendResults()
+    {
+        Results.Clear();
+    }
     #endregion
 
 }

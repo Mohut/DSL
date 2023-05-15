@@ -149,6 +149,7 @@ public class QuestionScreen : MonoBehaviour
     {
         if (GameManager.Instance.SetNextQuestion() == false)
         {
+            DataManager.Instance.SendResults();
             SceneManager.LoadEndScreen();
         }
     }

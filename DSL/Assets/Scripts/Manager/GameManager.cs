@@ -108,15 +108,24 @@ public class GameManager : MonoBehaviour
 
     public void CheckAnswer(Answer answer)
     {
+        Result result = new Result();
+        result.stationId = CurrentStation.id;
+        result.questionId = CurrentQuestion.id;
+        result.usedHint = PaidForHint;
+
         if (answer.isCorrect)
         {
+            result.isCorrect = true;
             CurrentGroup.points += CurrentQuestion.points;
             SetNextQuestion();
         }
         else
         {
+            result.isCorrect = false;
             SetNextQuestion();
         }
+
+        DataManager.Instance.Results.Add(result);
     }
 
     public void PayForHint()
