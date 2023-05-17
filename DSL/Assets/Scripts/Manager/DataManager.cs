@@ -19,6 +19,7 @@ using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Upload;
 using System.Threading.Tasks;
 using Google.Apis.Drive.v3;
+using Google.Apis.Drive.v3.Data;
 
 public class DataManager : MonoBehaviour
 {
@@ -161,9 +162,10 @@ public class DataManager : MonoBehaviour
             ApiKey = API_KEY,
         });
 
+        /*
         var fileContent = "This is the file content";
         var fileBytes = System.Text.Encoding.UTF8.GetBytes(fileContent);
-
+  
         using (var stream = new MemoryStream(fileBytes))
         {
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
@@ -174,12 +176,47 @@ public class DataManager : MonoBehaviour
 
             var uploadRequest = service.Files.Create(fileMetadata, stream, "text/plain");
             uploadRequest.Upload();
-            if (uploadRequest.ResponseBody != null)
+        }
+        */
+        // Define parameters of request.
+
+        var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+        {
+            Name = Path.GetFileName("text.txt"),
+            Parents = new[] { FOLDER_ID },
+        };
+
+        using (var stream = new FileStream("text.txt", FileMode.Open))
+        {
+            var uploadRequest = service.Files.Create(fileMetadata, stream, "text/plain");
+            uploadRequest.Upload();
+
+        }
+
+        /*
+        FilesResource.ListRequest listRequest = service.Files.List();
+
+        listRequest.Q = "'" + FOLDER_ID + "' in parents";
+        listRequest.PageSize = 10;
+        listRequest.Fields = "nextPageToken, files(id, name)";
+
+        // List files.
+        IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute().Files;
+        Console.WriteLine("Files:");
+        if (files != null && files.Count > 0)
+        {
+            foreach (var file in files)
             {
-               Debug.Log("Uploaded file ID: " + uploadRequest.ResponseBody.Id);
+                Debug.Log(file.Name + " " + file.Id);
             }
         }
+        else
+        {
+            Debug.Log("No files found.");
+        }
+        */
     }
+
 
     private void ReadCSVFile()
     {
@@ -255,10 +292,10 @@ public class DataManager : MonoBehaviour
     private void ReadGroupFile()
     {
         // Does the file exist?
-        if (File.Exists(saveFile))
+        if (System.IO.File.Exists(saveFile))
         {
             // Read the entire file and save its contents.
-            string fileContents = File.ReadAllText(saveFile);
+            string fileContents = System.IO.File.ReadAllText(saveFile);
 
             // Deserialize the JSON data 
             //  into a pattern matching the GameData class.
@@ -279,7 +316,7 @@ public class DataManager : MonoBehaviour
         string jsonString = JsonUtility.ToJson(groupData);
 
         // Write JSON to file.
-        File.WriteAllText(saveFile, jsonString);
+        System.IO.File.WriteAllText(saveFile, jsonString);
         Debug.Log("Saved File as: " + saveFile);
     }
 
