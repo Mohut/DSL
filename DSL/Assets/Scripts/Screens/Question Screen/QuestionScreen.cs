@@ -224,6 +224,8 @@ public class QuestionScreen : MonoBehaviour
                     }
                 }
             }
+
+            clearButton.GetComponent<Button>().interactable = false;
         }
         
         GameManager.Instance.AdChosenAnswer(currentQuestionCount, everyThingRight);
@@ -262,6 +264,7 @@ public class QuestionScreen : MonoBehaviour
         tipScreen.ResetTip();
         UpdateCurrentQuestionDataTexts();
         continueButton.interactable = false;
+        clearButton.GetComponent<Button>().interactable = true;
     }
     
     private bool CheckAnswer(int index)
