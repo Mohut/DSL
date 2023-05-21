@@ -41,6 +41,8 @@ public class DataManager : MonoBehaviour
     private const string API_KEY = "AIzaSyCq7JJrU0bMNH2ZUvXWMYqeWlErYHE6JzQ";
     private const string SPREADSHEET_ID = "1q6gBFNoM1Y0shjS_JSsihZ3UEHYWRNt9L_XiR_NewPk";
     private const string FOLDER_ID = "1IVtPswTMODFEBXWC4DPqIc-K849gcz3z";
+    private const string SERVICE_ACC = "serviceaccount@spring-radar-369315.iam.gserviceaccount.com";
+    private const string SERVICE_KEY_PATH = "spring-radar-369315-00574fd5ae2c.json";
     private List<Station> _stations = new();
     private List<Question> _questions = new();
     private List<Answer> _answers = new();
@@ -93,7 +95,7 @@ public class DataManager : MonoBehaviour
         {
             DownloadSheet(sheet);
         }
-
+        
         CreateTestData();
         ReadGroupFile();
         ReadCSVFile();
@@ -157,12 +159,14 @@ public class DataManager : MonoBehaviour
 
     private void UploadSheet()
     {
+        var credentials = GoogleCredential.FromFile(Application.dataPath + "/" + SERVICE_KEY_PATH).CreateScoped(DriveService.ScopeConstants.Drive);
+
+
         var service = new DriveService(new BaseClientService.Initializer
         {
-            ApiKey = API_KEY,
+            HttpClientInitializer = credentials
         });
 
-        /*
         var fileContent = "This is the file content";
         var fileBytes = System.Text.Encoding.UTF8.GetBytes(fileContent);
   
@@ -177,9 +181,9 @@ public class DataManager : MonoBehaviour
             var uploadRequest = service.Files.Create(fileMetadata, stream, "text/plain");
             uploadRequest.Upload();
         }
-        */
         // Define parameters of request.
 
+        /*
         var fileMetadata = new Google.Apis.Drive.v3.Data.File()
         {
             Name = Path.GetFileName("text.txt"),
@@ -192,7 +196,7 @@ public class DataManager : MonoBehaviour
             uploadRequest.Upload();
 
         }
-
+        */
         /*
         FilesResource.ListRequest listRequest = service.Files.List();
 
