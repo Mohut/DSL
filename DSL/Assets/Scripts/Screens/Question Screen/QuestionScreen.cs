@@ -254,7 +254,6 @@ public class QuestionScreen : MonoBehaviour
     {
         if (GameManager.Instance.SetNextQuestion() == false)
         {
-            DataManager.Instance.SendResults();
             SceneManager.LoadEndScreen();
         }
         
@@ -267,6 +266,8 @@ public class QuestionScreen : MonoBehaviour
     
     private bool CheckAnswer(int index)
     {
+        GameManager.Instance.SetResult(GameManager.Instance.CurrentAnswers[index]);
+
         if (GameManager.Instance.CurrentAnswers[index].isCorrect)
         {
             GameManager.Instance.CurrentGroup.points += GameManager.Instance.CurrentQuestion.points;
@@ -306,7 +307,7 @@ public class QuestionScreen : MonoBehaviour
     }
 
     public void ShowNextQuestion()
-    { 
+    {
         numberTMPList.Clear();
         sequenceImages.Clear();
         sequenceContentTransform.sizeDelta = Vector2.zero;

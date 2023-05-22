@@ -19,6 +19,8 @@ public class Endscreen : MonoBehaviour
         tipps.text = "Tipps: " + GameManager.Instance.AllUsedTips;
         upperHomeButton.onClick.AddListener(SceneManager.LoadMainMenu);
         lowerHombeButton.onClick.AddListener(SceneManager.LoadMainMenu);
+
+        DataManager.Instance.UploadSheet();
     }
 
     private void OnDisable()

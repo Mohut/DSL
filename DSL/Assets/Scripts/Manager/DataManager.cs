@@ -99,7 +99,7 @@ public class DataManager : MonoBehaviour
         CreateTestData();
         ReadGroupFile();
         ReadCSVFile();
-        UploadSheet();
+        //UploadSheet();
     }
 
     private void Update()
@@ -157,7 +157,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void UploadSheet()
+    public void UploadSheet()
     {
         var credentials = GoogleCredential.FromFile(Application.dataPath + "/" + SERVICE_KEY_PATH).CreateScoped(DriveService.ScopeConstants.Drive);
 
@@ -166,21 +166,32 @@ public class DataManager : MonoBehaviour
         {
             HttpClientInitializer = credentials
         });
-
-        var fileContent = "This is the file content";
-        var fileBytes = System.Text.Encoding.UTF8.GetBytes(fileContent);
+ 
+        //var fileContent = "This is the file content";
+        //var fileBytes = System.Text.Encoding.UTF8.GetBytes(fileContent);
   
-        using (var stream = new MemoryStream(fileBytes))
+        using (var stream = new MemoryStream())
         {
-            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            using (var streamWriter = new StreamWriter(stream))
+            using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
             {
-                Name = "myFile.txt",
-                Parents = new[] { FOLDER_ID },
-            };
+                csvWriter.Context.RegisterClassMap<ResultMap>();
+                csvWriter.WriteRecords(Results);
+                streamWriter.Flush(); // Flush the StreamWriter to ensure data is written to the stream.
 
-            var uploadRequest = service.Files.Create(fileMetadata, stream, "text/plain");
-            uploadRequest.Upload();
+                var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+                {
+                    Name = "result.csv",
+                    Parents = new[] { FOLDER_ID },
+                };
+
+                var uploadRequest = service.Files.Create(fileMetadata, stream, "text/plain");
+                uploadRequest.Upload();
+            } // StreamWriter gets flushed here.
+
         }
+
+        ClearResults();
         // Define parameters of request.
 
         /*
@@ -220,7 +231,6 @@ public class DataManager : MonoBehaviour
         }
         */
     }
-
 
     private void ReadCSVFile()
     {
@@ -486,7 +496,7 @@ public class DataManager : MonoBehaviour
     #endregion
 
     #region Result
-    public void SendResults()
+    public void ClearResults()
     {
         Results.Clear();
     }

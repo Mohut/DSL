@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    public void CheckAnswer(Answer answer)
+    public void SetResult(Answer answer)
     {
         Result result = new Result();
         result.stationId = CurrentStation.id;
@@ -116,13 +116,10 @@ public class GameManager : MonoBehaviour
         if (answer.isCorrect)
         {
             result.isCorrect = true;
-            CurrentGroup.points += CurrentQuestion.points;
-            SetNextQuestion();
         }
         else
         {
             result.isCorrect = false;
-            SetNextQuestion();
         }
 
         DataManager.Instance.Results.Add(result);
