@@ -11,11 +11,11 @@ public class QuestionTypeConverter : TypeConverter
     {
         QuestionType type = QuestionType.choice;
 
-        if (text.ToLower() == "choice" || text.ToLower() == "0")
+        if (text.ToLower() == "frage/antwort" || text.ToLower() == "0")
         {
             type = QuestionType.choice;
         }
-        else if (text.ToLower() == "sequence" || text.ToLower() == "1")
+        else if (text.ToLower() == "sequenz" || text.ToLower() == "1")
         {
             type = QuestionType.sequence;
         }
