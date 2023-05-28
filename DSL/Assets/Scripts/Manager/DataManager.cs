@@ -38,11 +38,11 @@ public class DataManager : MonoBehaviour
     public event Action<Group> OnNewGroupCreated;
     public event Action OnStationsLoaded;
 
-    private const string API_KEY = "AIzaSyCq7JJrU0bMNH2ZUvXWMYqeWlErYHE6JzQ";
-    private const string SPREADSHEET_ID = "1q6gBFNoM1Y0shjS_JSsihZ3UEHYWRNt9L_XiR_NewPk";
-    private const string FOLDER_ID = "1IVtPswTMODFEBXWC4DPqIc-K849gcz3z";
+    private const string API_KEY = "AIzaSyD0updEet8t1bsPScz8tmOHLfk2prxCOq0";
+    private const string SPREADSHEET_ID = "1YZyTv9T4fjRKxjxW0VuyW1UZIlyHdW8_2MfIIdpsLT8";
+    private const string FOLDER_ID = "1zqVZrRA_8-PGbnkE-nB7dIwdWG6T-375";
     private const string SERVICE_ACC = "serviceaccount@spring-radar-369315.iam.gserviceaccount.com";
-    private const string SERVICE_KEY_PATH = "spring-radar-369315-00574fd5ae2c.json";
+    private const string SERVICE_KEY_PATH = "quizapp-388018-e2e5fca58a92.json";
     private List<Station> _stations = new();
     private List<Question> _questions = new();
     private List<Answer> _answers = new();
