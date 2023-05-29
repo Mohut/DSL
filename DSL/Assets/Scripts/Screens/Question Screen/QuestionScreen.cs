@@ -267,8 +267,6 @@ public class QuestionScreen : MonoBehaviour
     
     private bool CheckAnswer(int index)
     {
-        GameManager.Instance.SetResult(GameManager.Instance.CurrentAnswers[index]);
-
         if (GameManager.Instance.CurrentAnswers[index].isCorrect)
         {
             GameManager.Instance.CurrentGroup.points += GameManager.Instance.CurrentQuestion.points;
@@ -336,12 +334,25 @@ public class QuestionScreen : MonoBehaviour
             int index = i;
             answerButtons[i].onClick.AddListener(() =>
             {
+                SetResultOnClick(index);
                 GameManager.Instance.AdChosenAnswer(currentQuestionCount, CheckAnswer(index));
                 ShowIfCorrect(answerButtons[index].GetComponent<Image>(), GameManager.Instance.CurrentAnswers[index].isCorrect);
                 tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
                 continueButton.interactable = true;
             });
         }
+    }
+
+    private void SetResultOnClick(int index)
+    {
+        if (GameManager.Instance.CurrentStation.questionId.Count <= GameManager.Instance.QuestionIteration + 1)
+        {
+            GameManager.Instance.SetResult(GameManager.Instance.CurrentAnswers[index], true);
+        }
+        else
+        {
+            GameManager.Instance.SetResult(GameManager.Instance.CurrentAnswers[index], false);
+        }            
     }
 
     public void ClearSequence()

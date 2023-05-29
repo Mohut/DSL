@@ -16,6 +16,8 @@ public class Result
     public bool usedHint;
     [Name("groupName")]
     public string groupName;
+    [Name("points")]
+    public string points;
 }
 
 public class ResultMap : ClassMap<Result>
@@ -27,5 +29,6 @@ public class ResultMap : ClassMap<Result>
         Map(m => m.isCorrect).Name("isCorrect");
         Map(m => m.usedHint).Name("usedHint");
         Map(m => m.groupName).Name("groupName");
+        Map(m => m.points).Name("points");
     }
 }

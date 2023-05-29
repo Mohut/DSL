@@ -106,13 +106,16 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    public void SetResult(Answer answer)
+    public void SetResult(Answer answer, bool lastQuestion = false)
     {
         Result result = new Result();
         result.stationId = CurrentStation.id;
         result.questionId = CurrentQuestion.id;
         result.usedHint = PaidForHint;
         result.groupName = CurrentGroup.name;
+
+        if(lastQuestion)
+            result.points = CurrentGroup.points.ToString();
 
         if (answer.isCorrect)
         {
