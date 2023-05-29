@@ -40,7 +40,7 @@ public class DataManager : MonoBehaviour
 
     private const string API_KEY = "AIzaSyD0updEet8t1bsPScz8tmOHLfk2prxCOq0";
     private const string SPREADSHEET_ID = "1YZyTv9T4fjRKxjxW0VuyW1UZIlyHdW8_2MfIIdpsLT8";
-    private const string FOLDER_ID = "1zqVZrRA_8-PGbnkE-nB7dIwdWG6T-375";
+    private const string FOLDER_ID = "1k-vL2YuYqPf6XbzVzOf7-6fASuvbGVPG";
     private const string SERVICE_ACC = "serviceaccount@spring-radar-369315.iam.gserviceaccount.com";
     private const string SERVICE_KEY_PATH = "quizapp-388018-e2e5fca58a92.json";
     private List<Station> _stations = new();
@@ -135,8 +135,8 @@ public class DataManager : MonoBehaviour
 
         var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
         var response = request.Execute();
-        Debug.Log("Saved as: " + Application.persistentDataPath + "/" + name + ".csv");
-        using (var writer = new StreamWriter(Application.persistentDataPath + "/" + name + ".csv"))
+        Debug.Log("Saved as: " + Application.persistentDataPath + "/" + name + ".CSV");
+        using (var writer = new StreamWriter(Application.persistentDataPath + "/" + name + ".CSV"))
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -181,11 +181,11 @@ public class DataManager : MonoBehaviour
 
                 var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                 {
-                    Name = "result.csv",
+                    Name = "result.CSV",
                     Parents = new[] { FOLDER_ID },
                 };
 
-                var uploadRequest = service.Files.Create(fileMetadata, stream, "text/plain");
+                var uploadRequest = service.Files.Create(fileMetadata, stream, "text/csv");
                 uploadRequest.Upload();
             } // StreamWriter gets flushed here.
 

@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
         result.stationId = CurrentStation.id;
         result.questionId = CurrentQuestion.id;
         result.usedHint = PaidForHint;
+        result.groupName = CurrentGroup.name;
 
         if (answer.isCorrect)
         {
