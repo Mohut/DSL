@@ -54,8 +54,7 @@ public class QuestionScreen : MonoBehaviour
     private List<GameObject> sequenceObjects = new List<GameObject>();
     private int sequenceCounter;
     private Dictionary<string, int> shuffledAnswers = new Dictionary<string, int>();
-
-    private float time;
+    
     private int currentQuestionCount = 1;
 
     void Start()
@@ -64,7 +63,6 @@ public class QuestionScreen : MonoBehaviour
         SetUpUpperPanel();
         GameManager.Instance.ResetUsedTips();
         yesButton.onClick.AddListener(SceneManager.LoadMainMenu);
-        time = GameManager.Instance.CurrentStation.time;
         homeButton.onClick.AddListener(SceneManager.LoadMainMenu);
 
         SetAnswerAndQuestionText();
