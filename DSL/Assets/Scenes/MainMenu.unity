@@ -884,42 +884,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DataManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: hints
-      value: 
-      objectReference: {fileID: 4900000, guid: 65a9a231da3956a4782fb4ccfdeaa327, type: 3}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: answers
-      value: 
-      objectReference: {fileID: 4900000, guid: 1b6e86193e6623041ab2867dab5a6f12, type: 3}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: stations
-      value: 
-      objectReference: {fileID: 4900000, guid: 07c1f4f9c7d60b84ebd34b1827c34c5a, type: 3}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: questions
-      value: 
-      objectReference: {fileID: 4900000, guid: a2c9282eced53244bb6b358e4c95eec6, type: 3}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: sheetNames.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: sheetNames.Array.data[0]
-      value: Station
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: sheetNames.Array.data[1]
-      value: Question
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: sheetNames.Array.data[2]
-      value: Answer
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
-      propertyPath: sheetNames.Array.data[3]
-      value: Hint
-      objectReference: {fileID: 0}
     - target: {fileID: 6226247742550254887, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
       propertyPath: m_RootOrder
       value: 3

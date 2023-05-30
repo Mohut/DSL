@@ -44,8 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cadbee42b404b0a4f83d0aaec852b121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stations: {fileID: 4900000, guid: 73a3da5c9c31f354d997eeb34cb31983, type: 3}
-  questions: {fileID: 4900000, guid: 60bcc5346e7d562438f629a057567c3e, type: 3}
-  answers: {fileID: 4900000, guid: fa7b5c44264a98b478476649860c35b7, type: 3}
-  hints: {fileID: 4900000, guid: d22568413eab8514c9f59f1fce449dcd, type: 3}
+  stations: {fileID: 4900000, guid: 07c1f4f9c7d60b84ebd34b1827c34c5a, type: 3}
+  questions: {fileID: 4900000, guid: a2c9282eced53244bb6b358e4c95eec6, type: 3}
+  answers: {fileID: 4900000, guid: 1b6e86193e6623041ab2867dab5a6f12, type: 3}
+  hints: {fileID: 4900000, guid: 65a9a231da3956a4782fb4ccfdeaa327, type: 3}
+  serviceKeyPath: {fileID: 4900000, guid: cadb0e7129fd5224680499a0e6dffb38, type: 3}
   saveFile: /groupdata.json
+  sheetNames:
+  - Station
+  - Question
+  - Answer
+  - Hint

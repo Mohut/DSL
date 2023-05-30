@@ -29,6 +29,7 @@ public class DataManager : MonoBehaviour
     public TextAsset questions;
     public TextAsset answers;
     public TextAsset hints;
+    public TextAsset serviceKeyPath;
 
     [Header("Options")]
     public string saveFile = "/groupdata.json";
@@ -42,7 +43,6 @@ public class DataManager : MonoBehaviour
     private const string SPREADSHEET_ID = "1YZyTv9T4fjRKxjxW0VuyW1UZIlyHdW8_2MfIIdpsLT8";
     private const string FOLDER_ID = "1k-vL2YuYqPf6XbzVzOf7-6fASuvbGVPG";
     private const string SERVICE_ACC = "serviceaccount@spring-radar-369315.iam.gserviceaccount.com";
-    private const string SERVICE_KEY_PATH = "quizapp-388018-e2e5fca58a92.json";
     private List<Station> _stations = new();
     private List<Question> _questions = new();
     private List<Answer> _answers = new();
@@ -159,77 +159,43 @@ public class DataManager : MonoBehaviour
 
     public void UploadSheet()
     {
-        var credentials = GoogleCredential.FromFile(Application.dataPath + "/" + SERVICE_KEY_PATH).CreateScoped(DriveService.ScopeConstants.Drive);
-
-
-        var service = new DriveService(new BaseClientService.Initializer
+        try
         {
-            HttpClientInitializer = credentials
-        });
- 
-        //var fileContent = "This is the file content";
-        //var fileBytes = System.Text.Encoding.UTF8.GetBytes(fileContent);
-  
-        using (var stream = new MemoryStream())
-        {
-            using (var streamWriter = new StreamWriter(stream))
-            using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+            Debug.Log("Key JSON: " + serviceKeyPath.text);
+            var credentials = GoogleCredential.FromJson(serviceKeyPath.text).CreateScoped(DriveService.ScopeConstants.Drive);
+            Debug.Log("Google credential: " + credentials);
+            var service = new DriveService(new BaseClientService.Initializer
             {
-                csvWriter.Context.RegisterClassMap<ResultMap>();
-                csvWriter.WriteRecords(Results);
-                streamWriter.Flush(); // Flush the StreamWriter to ensure data is written to the stream.
+                HttpClientInitializer = credentials
+            });
 
-                var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            using (var stream = new MemoryStream())
+            {
+                using (var streamWriter = new StreamWriter(stream))
+                using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
                 {
-                    Name = "result.CSV",
-                    Parents = new[] { FOLDER_ID },
-                };
+                    csvWriter.Context.RegisterClassMap<ResultMap>();
+                    csvWriter.WriteRecords(Results);
+                    streamWriter.Flush(); // Flush the StreamWriter to ensure data is written to the stream.
 
-                var uploadRequest = service.Files.Create(fileMetadata, stream, "text/csv");
-                uploadRequest.Upload();
-            } // StreamWriter gets flushed here.
+                    var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+                    {
+                        Name = "result.CSV",
+                        Parents = new[] { FOLDER_ID },
+                    };
 
-        }
+                    var uploadRequest = service.Files.Create(fileMetadata, stream, "text/csv");
+                    uploadRequest.Upload();
+                } // StreamWriter gets flushed here.
 
-        ClearResults();
-        // Define parameters of request.
-
-        /*
-        var fileMetadata = new Google.Apis.Drive.v3.Data.File()
-        {
-            Name = Path.GetFileName("text.txt"),
-            Parents = new[] { FOLDER_ID },
-        };
-
-        using (var stream = new FileStream("text.txt", FileMode.Open))
-        {
-            var uploadRequest = service.Files.Create(fileMetadata, stream, "text/plain");
-            uploadRequest.Upload();
-
-        }
-        */
-        /*
-        FilesResource.ListRequest listRequest = service.Files.List();
-
-        listRequest.Q = "'" + FOLDER_ID + "' in parents";
-        listRequest.PageSize = 10;
-        listRequest.Fields = "nextPageToken, files(id, name)";
-
-        // List files.
-        IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute().Files;
-        Console.WriteLine("Files:");
-        if (files != null && files.Count > 0)
-        {
-            foreach (var file in files)
-            {
-                Debug.Log(file.Name + " " + file.Id);
             }
+
+            ClearResults();
         }
-        else
+        catch (Exception ex) 
         {
-            Debug.Log("No files found.");
+            Debug.LogError("Error creating Google credential: " + ex.Message);
         }
-        */
     }
 
     private void ReadCSVFile()
