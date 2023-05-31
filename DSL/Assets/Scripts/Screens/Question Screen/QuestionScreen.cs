@@ -123,6 +123,8 @@ public class QuestionScreen : MonoBehaviour
             Shuffle();
             SetSequenceButtons();
         }
+        
+        question.SetText(GameManager.Instance.CurrentQuestion.text);
     }
 
     private void SetChoiceQuestionText()
