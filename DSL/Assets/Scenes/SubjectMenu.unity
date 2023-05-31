@@ -1903,7 +1903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e166cba453b4b344590fa68f1c5bc969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 983908467}
+  inputField: {fileID: 1648934505}
   subjectButtonPrefab: {fileID: 4378055749182005574, guid: 295fccfd69d4136428b69e760772c016, type: 3}
   parentTransform: {fileID: 810447118}
   buttonTexts:

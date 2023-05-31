@@ -1,14 +1,12 @@
 using System.Collections.Generic;
-using Mono.Cecil.Cil;
 using TMPro;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SubjectButton : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI inputField;
+    [SerializeField] private TMP_InputField inputField;
     [SerializeField] private GameObject subjectButtonPrefab;
     [SerializeField] private Transform parentTransform;
     
@@ -21,6 +19,12 @@ public class SubjectButton : MonoBehaviour
     {
         CreateSubjectButtons();
         homebutton.onClick.AddListener(SceneManager.LoadMainMenu);
+
+        Debug.Log(DataManager.Instance.LastGroupName);
+        if (DataManager.Instance.LastGroupName != null)
+            return;
+        
+        inputField.text = DataManager.Instance.LastGroupName;
     }
 
     private void CreateSubjectButtons()
@@ -41,6 +45,8 @@ public class SubjectButton : MonoBehaviour
             subjectButton.GetComponent<Button>().onClick.AddListener(() =>
             {
                 DataManager.Instance.AddNewGroup(inputField.text);
+                DataManager.Instance.LastGroupName = inputField.text;
+                Debug.Log(DataManager.Instance.LastGroupName);
                 GameManager.Instance.SetCurrentStation(DataManager.Instance.Stations[stationIndex]);
                 SceneManager.LoadQuestionScreen();
             });

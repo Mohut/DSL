@@ -9,11 +9,13 @@ public class TipScreen : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private Button showTippButton;
     [SerializeField] private TextMeshProUGUI tipText;
+    [SerializeField] private TextMeshProUGUI currentScoreText;
 
     private void Start()
     {
-        if(GameManager.Instance.CurrentHint != null)
+        if (GameManager.Instance.CurrentHint != null)
             tipText.text = GameManager.Instance.CurrentHint.text;
+        
         tipButton.onClick.AddListener(() => OpenTipWindow(true));
         closeButton.onClick.AddListener(() => OpenTipWindow(false));
         showTippButton.onClick.AddListener(ShowTip);
@@ -55,6 +57,7 @@ public class TipScreen : MonoBehaviour
         GameManager.Instance.UsedTips++;
         GameManager.Instance.AllUsedTips++;
         GameManager.Instance.PayForHint();
+        currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
         tipText.enabled = true;
         showTippButton.enabled = false;
     }

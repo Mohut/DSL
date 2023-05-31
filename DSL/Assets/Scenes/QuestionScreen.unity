@@ -537,6 +537,7 @@ MonoBehaviour:
   closeButton: {fileID: 267775255}
   showTippButton: {fileID: 1020983212}
   tipText: {fileID: 2138772922}
+  currentScoreText: {fileID: 316395212}
 --- !u!1 &242656232
 GameObject:
   m_ObjectHideFlags: 0
@@ -3996,6 +3997,10 @@ PrefabInstance:
     - target: {fileID: 4414237335595170289, guid: 9a048b89fe16d944a91d45ea19fa8313, type: 3}
       propertyPath: m_Name
       value: UpperPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4414237337342393177, guid: 9a048b89fe16d944a91d45ea19fa8313, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a048b89fe16d944a91d45ea19fa8313, type: 3}

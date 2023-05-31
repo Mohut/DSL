@@ -17,8 +17,8 @@ public class Endscreen : MonoBehaviour
         groupName.text = GameManager.Instance.CurrentGroup.name;
         points.text = "Punkte: " + GameManager.Instance.CurrentGroup.points;
         tipps.text = "Tipps: " + GameManager.Instance.AllUsedTips;
-        upperHomeButton.onClick.AddListener(SceneManager.LoadMainMenu);
-        lowerHombeButton.onClick.AddListener(SceneManager.LoadMainMenu);
+        upperHomeButton.onClick.AddListener(SceneManager.LoadSubjectScreen);
+        lowerHombeButton.onClick.AddListener(SceneManager.LoadSubjectScreen);
 
         DataManager.Instance.UploadSheet();
     }

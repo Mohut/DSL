@@ -104,7 +104,13 @@ public class GameManager : MonoBehaviour
             CurrentAnswers = DataManager.Instance.GetAnswersById(CurrentQuestion.answerId.ToList());
 
             if (!string.IsNullOrEmpty(CurrentQuestion.hintId))
+            {
                 CurrentHint = DataManager.Instance.GetHintById(int.Parse(CurrentQuestion.hintId));
+            }
+            else
+            {
+                CurrentHint = null;
+            }    
 
             PaidForHint = false;
         }
@@ -156,6 +162,8 @@ public class GameManager : MonoBehaviour
 
     public void AdChosenAnswer(int taskNumber, bool right)
     {
+        if(right)
+            Instance.CurrentGroup.points += Instance.CurrentQuestion.points;
         chosenAnswers.Add(new ChosenAnswer(taskNumber, _currentQuestion, right,  _usedTips));
     }
 }

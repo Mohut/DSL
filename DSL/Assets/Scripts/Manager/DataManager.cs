@@ -54,6 +54,7 @@ public class DataManager : MonoBehaviour
     private bool _isGroupFileDirty;
     private GroupData groupData;
     private Group currentGroup;
+    private string lastGroupName;
 
     private static DataManager s_instance;
     #endregion
@@ -68,6 +69,7 @@ public class DataManager : MonoBehaviour
     public List<Group> Groups { get => _groups; private set => _groups = value; }
     public Group CurrentGroup { get => currentGroup; private set => currentGroup = value; }
     public List<Result> Results { get => _results; set => _results = value; }
+    public string LastGroupName { get => lastGroupName; set => lastGroupName = value; }
     #endregion
 
     #region Monobehavior Functions

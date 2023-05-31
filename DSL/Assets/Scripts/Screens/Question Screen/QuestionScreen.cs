@@ -81,6 +81,7 @@ public class QuestionScreen : MonoBehaviour
     
     public void Shuffle()  
     {  
+        shuffledAnswers = new Dictionary<string, int>();
         Random rand = new Random();
         for (int i = 0; i < GameManager.Instance.CurrentAnswers.Count; i++)
         {
@@ -227,6 +228,7 @@ public class QuestionScreen : MonoBehaviour
         }
         
         GameManager.Instance.AdChosenAnswer(currentQuestionCount, everyThingRight);
+        currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
     }
 
     private bool CheckIfContinueIsPossible()
@@ -270,8 +272,6 @@ public class QuestionScreen : MonoBehaviour
     {
         if (GameManager.Instance.CurrentAnswers[index].isCorrect)
         {
-            GameManager.Instance.CurrentGroup.points += GameManager.Instance.CurrentQuestion.points;
-            currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
             return true;
         }
         return false;
@@ -339,6 +339,7 @@ public class QuestionScreen : MonoBehaviour
                 GameManager.Instance.AdChosenAnswer(currentQuestionCount, CheckAnswer(index));
                 ShowIfCorrect(answerButtons[index].GetComponent<Image>(), GameManager.Instance.CurrentAnswers[index].isCorrect);
                 continueButton.interactable = true;
+                currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
             });
         }
     }
