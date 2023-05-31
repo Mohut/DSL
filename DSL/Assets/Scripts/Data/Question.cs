@@ -34,9 +34,9 @@ public class Question
     [TypeConverter(typeof(ToIntArrayConverter))]
     public List<int> answerId{ get; set; }
 
-    [Ignore]
+    [Optional]
     [Name("hintId")]
-    public int hintId;
+    public string hintId;
 }
 public class QuestionMap : ClassMap<Question>
 {
@@ -47,5 +47,6 @@ public class QuestionMap : ClassMap<Question>
         Map(m => m.type).Name("type").TypeConverter<QuestionTypeConverter>();
         Map(m => m.points).Name("points");
         Map(m => m.answerId).Name("answerId").TypeConverter<ToIntArrayConverter>();
+        Map(m => m.hintId).Name("hintId");
     }
 }

@@ -78,7 +78,10 @@ public class GameManager : MonoBehaviour
         // Set current question to first question
         CurrentQuestion = DataManager.Instance.GetQuestionById(station.questionId[0]);
         CurrentAnswers = DataManager.Instance.GetAnswersById(CurrentQuestion.answerId.ToList());
-        CurrentHint = DataManager.Instance.GetHintById(CurrentQuestion.hintId);
+
+        if(!string.IsNullOrEmpty(CurrentQuestion.hintId))
+            CurrentHint = DataManager.Instance.GetHintById(int.Parse(CurrentQuestion.hintId));
+
         CurrentGroup.stationId = CurrentStation.id;
 
         QuestionIteration = 0;
@@ -99,7 +102,10 @@ public class GameManager : MonoBehaviour
         {
             CurrentQuestion = DataManager.Instance.GetQuestionById(CurrentStation.questionId[QuestionIteration]);
             CurrentAnswers = DataManager.Instance.GetAnswersById(CurrentQuestion.answerId.ToList());
-            CurrentHint = DataManager.Instance.GetHintById(CurrentQuestion.hintId);
+
+            if (!string.IsNullOrEmpty(CurrentQuestion.hintId))
+                CurrentHint = DataManager.Instance.GetHintById(int.Parse(CurrentQuestion.hintId));
+
             PaidForHint = false;
         }
 
