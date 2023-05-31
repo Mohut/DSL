@@ -12,10 +12,12 @@ public class TipScreen : MonoBehaviour
 
     private void Start()
     {
-        tipText.text = GameManager.Instance.CurrentHint.text;
+        if(GameManager.Instance.CurrentHint != null)
+            tipText.text = GameManager.Instance.CurrentHint.text;
         tipButton.onClick.AddListener(() => OpenTipWindow(true));
         closeButton.onClick.AddListener(() => OpenTipWindow(false));
         showTippButton.onClick.AddListener(ShowTip);
+        ShowTipButton(GameManager.Instance.CurrentHint != null);
     }
 
     private void OnDestroy()
@@ -61,7 +63,8 @@ public class TipScreen : MonoBehaviour
     {
         GameManager.Instance.UsedTips = 0;
         GameManager.Instance.PaidForHint = false;
-        tipText.text = GameManager.Instance.CurrentHint.text;
+        if(GameManager.Instance.CurrentHint != null)
+            tipText.text = GameManager.Instance.CurrentHint.text;
         tipText.enabled = false;
         showTippButton.enabled = true;
     }

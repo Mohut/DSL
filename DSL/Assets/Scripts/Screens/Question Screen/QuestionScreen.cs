@@ -263,6 +263,7 @@ public class QuestionScreen : MonoBehaviour
         UpdateCurrentQuestionDataTexts();
         continueButton.interactable = false;
         clearButton.GetComponent<Button>().interactable = true;
+        tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
     }
     
     private bool CheckAnswer(int index)
@@ -337,7 +338,6 @@ public class QuestionScreen : MonoBehaviour
                 SetResultOnClick(index);
                 GameManager.Instance.AdChosenAnswer(currentQuestionCount, CheckAnswer(index));
                 ShowIfCorrect(answerButtons[index].GetComponent<Image>(), GameManager.Instance.CurrentAnswers[index].isCorrect);
-                tipScreen.ShowTipButton(GameManager.Instance.CurrentHint != null);
                 continueButton.interactable = true;
             });
         }
