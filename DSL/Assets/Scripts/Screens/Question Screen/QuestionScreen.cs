@@ -234,6 +234,9 @@ public class QuestionScreen : MonoBehaviour
         Answer tmp = new Answer();
         tmp.isCorrect = everyThingRight;
 
+        GameManager.Instance.AdChosenAnswer(currentQuestionCount, everyThingRight);
+        currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
+
         if (GameManager.Instance.CurrentStation.questionId.Count <= GameManager.Instance.QuestionIteration + 1)
         {
             GameManager.Instance.SetResult(tmp, true);
@@ -242,9 +245,6 @@ public class QuestionScreen : MonoBehaviour
         {
             GameManager.Instance.SetResult(tmp, false);
         }
-
-        GameManager.Instance.AdChosenAnswer(currentQuestionCount, everyThingRight);
-        currentScoreText.text = "Score: " + GameManager.Instance.CurrentGroup.points;
     }
 
     private bool CheckIfContinueIsPossible()
