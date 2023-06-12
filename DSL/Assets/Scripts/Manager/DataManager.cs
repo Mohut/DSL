@@ -97,16 +97,15 @@ public class DataManager : MonoBehaviour
         }
         
         CreateTestData();
-        ReadGroupFile();
         ReadCSVFile();
-        //UploadSheet();
+        //ReadGroupFile();
     }
 
     private void OnApplicationPause()
     {
         if (_isGroupFileDirty)
         {
-            WriteFile();
+            //WriteFile();
         }
     }
     #endregion
