@@ -21,10 +21,10 @@ public class SubjectButton : MonoBehaviour
         homebutton.onClick.AddListener(SceneManager.LoadMainMenu);
 
         Debug.Log(DataManager.Instance.LastGroupName);
-        if (DataManager.Instance.LastGroupName != null)
+        if (string.IsNullOrEmpty(GameManager.Instance.CurrentGroup?.name))
             return;
         
-        inputField.text = DataManager.Instance.LastGroupName;
+        inputField.text = GameManager.Instance.CurrentGroup.name;
     }
 
     private void CreateSubjectButtons()

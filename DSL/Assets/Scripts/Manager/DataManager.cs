@@ -53,7 +53,6 @@ public class DataManager : MonoBehaviour
     // bool to check if we need to rewrite the group file
     private bool _isGroupFileDirty;
     private GroupData groupData;
-    private Group currentGroup;
     private string lastGroupName;
 
     private static DataManager s_instance;
@@ -67,7 +66,6 @@ public class DataManager : MonoBehaviour
     public List<Answer> Answers { get => _answers; private set => _answers = value; }
     public List<Hint> Hints { get => _hints; private set => _hints = value; }
     public List<Group> Groups { get => _groups; private set => _groups = value; }
-    public Group CurrentGroup { get => currentGroup; private set => currentGroup = value; }
     public List<Result> Results { get => _results; set => _results = value; }
     public string LastGroupName { get => lastGroupName; set => lastGroupName = value; }
     #endregion
@@ -102,14 +100,6 @@ public class DataManager : MonoBehaviour
         ReadGroupFile();
         ReadCSVFile();
         //UploadSheet();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.F1))
-        {
-            AddNewGroup("groupName" + Random.Range(0, 10), Random.Range(0, 100), Random.Range(0, 2));
-        }
     }
 
     private void OnApplicationPause()
