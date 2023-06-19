@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class TipScreen : MonoBehaviour
     [SerializeField] private Button showTippButton;
     [SerializeField] private TextMeshProUGUI tipText;
     [SerializeField] private TextMeshProUGUI currentScoreText;
+    public TMPro.TextMeshProUGUI pointsText;
 
     private void Start()
     {
@@ -43,6 +45,7 @@ public class TipScreen : MonoBehaviour
             tipText.enabled = false;
             showTippButton.enabled = true;
             showTippButton.gameObject.SetActive(true);
+            pointsText.SetText("- " + GameManager.Instance.CurrentHint.price + " Punkte");
         }
     }
 
