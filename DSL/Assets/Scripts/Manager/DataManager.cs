@@ -1,43 +1,29 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Net;
-using System.Text;
-using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
-using Google.Apis.Util.Store;
-using System.Threading;
-using Google.Apis.Sheets.v4.Data;
-using Google.Apis.Upload;
-using System.Threading.Tasks;
 using Google.Apis.Drive.v3;
-using Google.Apis.Drive.v3.Data;
 
 public class DataManager : MonoBehaviour
 {
     #region Attributes
     [Header("References")]
-    public TextAsset stations;
-    public TextAsset questions;
-    public TextAsset answers;
-    public TextAsset hints;
     public TextAsset serviceKeyPath;
 
     [Header("Options")]
-    private string saveFile = Path.DirectorySeparatorChar + "groupdata.json";
     public List<string> sheetNames = new List<string>();
 
     public event Action OnGroupDataLoaded;
     public event Action<Group> OnNewGroupCreated;
     public event Action OnStationsLoaded;
+
+    public string debug;
 
     private const string API_KEY = "AIzaSyD0updEet8t1bsPScz8tmOHLfk2prxCOq0";
     private const string SPREADSHEET_ID = "1YZyTv9T4fjRKxjxW0VuyW1UZIlyHdW8_2MfIIdpsLT8";
@@ -83,7 +69,6 @@ public class DataManager : MonoBehaviour
         }
 
         groupData = new GroupData();
-        saveFile = Application.persistentDataPath + saveFile;
         DontDestroyOnLoad(this);
     }
 
@@ -107,37 +92,44 @@ public class DataManager : MonoBehaviour
     #region CSV Drive Functions
     private void DownloadSheet(string name)
     {
-        string apiKey = API_KEY;
-        var initializer = new BaseClientService.Initializer()
+        try
         {
-            ApiKey = apiKey,
-        };
-
-        var service = new SheetsService(initializer);
-
-        string spreadsheetId = SPREADSHEET_ID;
-        string range = name;
-
-        var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
-        var response = request.Execute();
-        using (var writer = new StreamWriter(Application.persistentDataPath + Path.DirectorySeparatorChar + name + ".CSV"))
-        {
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            string apiKey = API_KEY;
+            var initializer = new BaseClientService.Initializer()
             {
-                Delimiter = ";",
+                ApiKey = apiKey,
             };
 
-            var csv = new CsvWriter(writer, config);
+            var service = new SheetsService(initializer);
 
-            foreach (var row in response.Values)
+            string spreadsheetId = SPREADSHEET_ID;
+            string range = name;
+
+            var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
+            var response = request.Execute();
+            using (var writer = new StreamWriter(Application.persistentDataPath + Path.DirectorySeparatorChar + name + ".csv"))
             {
-                for (int i = 0; i < row.Count; i++)
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
-                    var cellValue = row[i]?.ToString();
-                    csv.WriteField(cellValue);
+                    Delimiter = ";",
+                };
+
+                var csv = new CsvWriter(writer, config);
+
+                foreach (var row in response.Values)
+                {
+                    for (int i = 0; i < row.Count; i++)
+                    {
+                        var cellValue = row[i]?.ToString();
+                        csv.WriteField(cellValue);
+                    }
+                    csv.NextRecord();
                 }
-                csv.NextRecord();
             }
+        }
+        catch (Exception ex) 
+        {
+            debug = ex.Message;
         }
     }
 

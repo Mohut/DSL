@@ -23,9 +23,8 @@ public class DebugCSV : MonoBehaviour
             debug = "File and Directory exists.";
         }
 
-        debug += "\n";
-        debug += "\n";
-
+        //debug += "\n\n";
+        /*
         if (DataManager.Instance.Stations.Count > 0)
         {
             debug += "DataManager has Station data.";
@@ -34,6 +33,16 @@ public class DebugCSV : MonoBehaviour
         {
             debug += "DataManager has no data.";
         }
+        */
+
+        debug += DataManager.Instance.debug;
+
+        debug += "\n\nFiles:\n";
+
+        foreach (var item in Directory.GetFiles(Application.persistentDataPath))
+        {
+            debug += item + "\n\n";
+        } 
 
         text.text = debug;
     }
