@@ -7,9 +7,9 @@ using System.Collections;
 public class Result
 {
     [Name("stationId")]
-    public int stationId;
+    public string station;
     [Name("questionId")]
-    public int questionId;
+    public string question;
     [Name("isCorrect")]
     public bool isCorrect;
     [Name("usedHint")]
@@ -24,8 +24,8 @@ public class ResultMap : ClassMap<Result>
 {
     public ResultMap()
     {
-        Map(m => m.stationId).Name("stationId");
-        Map(m => m.questionId).Name("questionId");
+        Map(m => m.station).Name("station");
+        Map(m => m.question).Name("question");
         Map(m => m.isCorrect).Name("isCorrect");
         Map(m => m.usedHint).Name("usedHint");
         Map(m => m.groupName).Name("groupName");

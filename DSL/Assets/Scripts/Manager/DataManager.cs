@@ -42,6 +42,7 @@ public class DataManager : MonoBehaviour
     private const string API_KEY = "AIzaSyD0updEet8t1bsPScz8tmOHLfk2prxCOq0";
     private const string SPREADSHEET_ID = "1YZyTv9T4fjRKxjxW0VuyW1UZIlyHdW8_2MfIIdpsLT8";
     private const string FOLDER_ID = "1k-vL2YuYqPf6XbzVzOf7-6fASuvbGVPG";
+    private const string FOLDER_ID_PROCESSED = "1wqmn1YGOhHQok7kTXv2rFT5T4q6Y_3a_";
     private const string SERVICE_ACC = "serviceaccount@spring-radar-369315.iam.gserviceaccount.com";
     private List<Station> _stations = new();
     private List<Question> _questions = new();
@@ -97,7 +98,11 @@ public class DataManager : MonoBehaviour
         }
         
         ReadCSVFile();
-        //ReadGroupFile();
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        DeleteFilesInFolder();    
     }
 
     #endregion
@@ -118,7 +123,6 @@ public class DataManager : MonoBehaviour
 
         var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
         var response = request.Execute();
-        Debug.Log("Saved as: " + Application.persistentDataPath + Path.DirectorySeparatorChar + name + ".CSV");
         using (var writer = new StreamWriter(Application.persistentDataPath + Path.DirectorySeparatorChar + name + ".CSV"))
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -144,9 +148,7 @@ public class DataManager : MonoBehaviour
     {
         try
         {
-            Debug.Log("Key JSON: " + serviceKeyPath.text);
             var credentials = GoogleCredential.FromJson(serviceKeyPath.text).CreateScoped(DriveService.ScopeConstants.Drive);
-            Debug.Log("Google credential: " + credentials);
             var service = new DriveService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = credentials
@@ -178,6 +180,26 @@ public class DataManager : MonoBehaviour
         catch (Exception ex) 
         {
             Debug.LogError("Error creating Google credential: " + ex.Message);
+        }
+    }
+
+    public void DeleteFilesInFolder()
+    {
+        var credentials = GoogleCredential.FromJson(serviceKeyPath.text).CreateScoped(DriveService.ScopeConstants.Drive);
+        var service = new DriveService(new BaseClientService.Initializer
+        {
+            HttpClientInitializer = credentials
+        });
+
+        // Retrieve all files in the specified folder
+        var fileListRequest = service.Files.List();
+        fileListRequest.Q = $"'{FOLDER_ID_PROCESSED}' in parents and trashed = false";
+        var files = fileListRequest.Execute().Files;
+
+        // Delete each file in the folder
+        foreach (var file in files)
+        {
+            service.Files.Delete(file.Id).Execute();
         }
     }
 
@@ -250,37 +272,6 @@ public class DataManager : MonoBehaviour
         _isGroupFileDirty = true;
         OnNewGroupCreated?.Invoke(group);
         return group;
-    }
-
-    private void ReadGroupFile()
-    {
-        // Does the file exist?
-        if (System.IO.File.Exists(saveFile))
-        {
-            // Read the entire file and save its contents.
-            string fileContents = System.IO.File.ReadAllText(saveFile);
-
-            // Deserialize the JSON data 
-            //  into a pattern matching the GameData class.
-            groupData = JsonUtility.FromJson<GroupData>(fileContents);
-            Groups = new List<Group>(groupData.groupData);
-            Debug.Log(Groups.Count + " groups have been read.");
-            OnGroupDataLoaded?.Invoke();
-        }
-        else
-        {
-            Debug.Log("Group file doesnt exist.");
-        }
-    }
-
-    private void WriteFile()
-    {
-        // Serialize the object into JSON and save string.
-        string jsonString = JsonUtility.ToJson(groupData);
-
-        // Write JSON to file.
-        System.IO.File.WriteAllText(saveFile, jsonString);
-        Debug.Log("Saved File as: " + saveFile);
     }
 
     #endregion

@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
     public void SetResult(Answer answer, bool lastQuestion = false)
     {
         Result result = new Result();
-        result.stationId = CurrentStation.id;
-        result.questionId = CurrentQuestion.id;
+        result.station = CurrentStation.name;
+        result.question = CurrentQuestion.text;
         result.usedHint = PaidForHint;
         result.groupName = CurrentGroup.name;
 
