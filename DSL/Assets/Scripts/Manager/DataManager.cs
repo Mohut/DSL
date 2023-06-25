@@ -32,7 +32,7 @@ public class DataManager : MonoBehaviour
     public TextAsset serviceKeyPath;
 
     [Header("Options")]
-    public string saveFile = "/groupdata.json";
+    private string saveFile = Path.DirectorySeparatorChar + "groupdata.json";
     public List<string> sheetNames = new List<string>();
 
     public event Action OnGroupDataLoaded;
@@ -43,7 +43,6 @@ public class DataManager : MonoBehaviour
     private const string SPREADSHEET_ID = "1YZyTv9T4fjRKxjxW0VuyW1UZIlyHdW8_2MfIIdpsLT8";
     private const string FOLDER_ID = "1k-vL2YuYqPf6XbzVzOf7-6fASuvbGVPG";
     private const string FOLDER_ID_PROCESSED = "1wqmn1YGOhHQok7kTXv2rFT5T4q6Y_3a_";
-    private const string SERVICE_ACC = "serviceaccount@spring-radar-369315.iam.gserviceaccount.com";
     private List<Station> _stations = new();
     private List<Question> _questions = new();
     private List<Answer> _answers = new();
@@ -52,7 +51,6 @@ public class DataManager : MonoBehaviour
     private List<Result> _results = new();
 
     // bool to check if we need to rewrite the group file
-    private bool _isGroupFileDirty;
     private GroupData groupData;
     private string lastGroupName;
 
@@ -86,7 +84,6 @@ public class DataManager : MonoBehaviour
 
         groupData = new GroupData();
         saveFile = Application.persistentDataPath + saveFile;
-        Debug.Log(saveFile);
         DontDestroyOnLoad(this);
     }
 
@@ -269,7 +266,6 @@ public class DataManager : MonoBehaviour
         group.points = points;
         group.stationId = stationId;
         groupData.groupData.Add(group);
-        _isGroupFileDirty = true;
         OnNewGroupCreated?.Invoke(group);
         return group;
     }
