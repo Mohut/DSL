@@ -9,6 +9,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Drive.v3;
+using Google.Apis.Sheets.v4.Data;
 
 public class DataManager : MonoBehaviour
 {
@@ -26,9 +27,13 @@ public class DataManager : MonoBehaviour
     public string debug;
 
     private const string API_KEY = "AIzaSyD0updEet8t1bsPScz8tmOHLfk2prxCOq0";
-    private const string SPREADSHEET_ID = "1YZyTv9T4fjRKxjxW0VuyW1UZIlyHdW8_2MfIIdpsLT8";
+    private const string ROOT_FOLDER_ID = "1Uc_NfmXtWTIiU2RC_Gk51JXjaafgRFbA";
     private const string FOLDER_ID = "1k-vL2YuYqPf6XbzVzOf7-6fASuvbGVPG";
     private const string FOLDER_ID_PROCESSED = "1wqmn1YGOhHQok7kTXv2rFT5T4q6Y_3a_";
+    private const string FOLDER_ID_SHEETS = "1NT-umDzynzMN0hI_mXAJpQ3c98Z1myhk";
+
+    private Dictionary<string, string> _dataSheets = new Dictionary<string, string>();
+
     private List<Station> _stations = new();
     private List<Question> _questions = new();
     private List<Answer> _answers = new();
@@ -45,6 +50,8 @@ public class DataManager : MonoBehaviour
 
     #region Properties
     public static DataManager Instance { get { return s_instance; } }
+
+    public Dictionary<string, string> DataSheets { get => _dataSheets; set => _dataSheets = value; }
 
     public List<Station> Stations { get => _stations; private set => _stations = value; }
     public List<Question> Questions { get => _questions; private set => _questions = value; }
@@ -74,12 +81,27 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (string sheet in sheetNames)
+        DataSheets = GetAllFileIdsInFolder();
+
+        foreach (var item in DataSheets)
         {
-            DownloadSheet(sheet);
+            foreach (var sheet in sheetNames)
+            {
+                DownloadSheet(sheet, item.Value, item.Key);
+            }
         }
-        
-        ReadCSVFile();
+    }
+
+    public void TestReadData()
+    {
+        foreach (var sheet in DataSheets)
+        {
+            Debug.Log(sheet.Key);
+            if (sheet.Key == "Soziale Arbeit")
+            {
+                ReadCSVFile(sheet.Key);
+            }
+        }
     }
 
     private void OnApplicationPause(bool pause)
@@ -90,7 +112,52 @@ public class DataManager : MonoBehaviour
     #endregion
 
     #region CSV Drive Functions
-    private void DownloadSheet(string name)
+    private Dictionary<string, string> GetAllFileIdsInFolder()
+    {
+        Dictionary<string, string> fileIds = new Dictionary<string, string>();
+
+        try
+        {
+            string apiKey = API_KEY;
+            var driveService = new DriveService(new BaseClientService.Initializer()
+            {
+                ApiKey = apiKey,
+            });
+
+            // Retrieve the list of files within the specified folder
+            var driveFilesRequest = driveService.Files.List();
+            driveFilesRequest.Q = $"'{ROOT_FOLDER_ID}' in parents";
+            var driveFilesResponse = driveFilesRequest.Execute();
+            
+            // Iterate through each file in the folder
+            foreach (var driveFile in driveFilesResponse.Files)
+            {
+                if (driveFile.MimeType == "application/vnd.google-apps.folder")
+                {
+                    if(driveFile.Id == FOLDER_ID_SHEETS)
+                    {
+                        // Retrieve the list of files within the specified folder
+                        var driveFilesRequest2 = driveService.Files.List();
+                        driveFilesRequest2.Q = $"'{FOLDER_ID_SHEETS}' in parents";
+                        var driveFilesResponse2 = driveFilesRequest2.Execute();
+
+                        foreach (var driveFile2 in driveFilesResponse2.Files)
+                        {
+                            fileIds.Add(driveFile2.Name, driveFile2.Id);
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            debug = ex.Message;
+        }
+
+        return fileIds;
+    }
+
+    private void DownloadSheet(string name, string sheetId, string sheetName)
     {
         try
         {
@@ -102,12 +169,14 @@ public class DataManager : MonoBehaviour
 
             var service = new SheetsService(initializer);
 
-            string spreadsheetId = SPREADSHEET_ID;
+            string spreadsheetId = sheetId;
             string range = name;
 
             var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
             var response = request.Execute();
-            using (var writer = new StreamWriter(Application.persistentDataPath + Path.DirectorySeparatorChar + name + ".csv"))
+
+            Debug.Log(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + name + ".csv");
+            using (var writer = new StreamWriter(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + name + ".csv"))
             {
                 var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
@@ -133,7 +202,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void UploadSheet()
+    public void UploadResult()
     {
         try
         {
@@ -192,15 +261,15 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void ReadCSVFile()
+    private void ReadCSVFile(string sheetName)
     {
         var config = new CsvConfiguration(CultureInfo.GetCultureInfoByIetfLanguageTag("de-DE"))
         {
             Delimiter = ";",
             MissingFieldFound = null,
     };
-
-        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + "Station.csv"))
+        Debug.Log(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Station.csv");
+        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Station.csv"))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<StationMap>();
@@ -212,7 +281,7 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + "Question.csv"))
+        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Question.csv"))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<QuestionMap>();
@@ -224,7 +293,7 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + "Answer.csv"))
+        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Answer.csv"))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<AnswerMap>();
@@ -236,7 +305,7 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + "Hint.csv"))
+        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Hint.csv"))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<HintMap>();

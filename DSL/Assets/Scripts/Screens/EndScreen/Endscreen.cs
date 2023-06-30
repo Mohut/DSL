@@ -20,7 +20,7 @@ public class Endscreen : MonoBehaviour
         upperHomeButton.onClick.AddListener(SceneManager.LoadSubjectScreen);
         lowerHombeButton.onClick.AddListener(SceneManager.LoadSubjectScreen);
 
-        DataManager.Instance.UploadSheet();
+        DataManager.Instance.UploadResult();
     }
 
     private void OnDisable()
