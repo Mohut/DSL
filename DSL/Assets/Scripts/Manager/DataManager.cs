@@ -51,6 +51,7 @@ public class DataManager : MonoBehaviour
     #region Properties
     public static DataManager Instance { get { return s_instance; } }
 
+    // Key: Name der CSV, Value: ID der CSV
     public Dictionary<string, string> DataSheets { get => _dataSheets; set => _dataSheets = value; }
 
     public List<Station> Stations { get => _stations; private set => _stations = value; }
