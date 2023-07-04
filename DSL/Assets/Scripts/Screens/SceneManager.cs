@@ -7,6 +7,11 @@ public static class SceneManager
         UnityEngine.SceneManagement.SceneManager.LoadScene("EndScreen");
     }
 
+    public static void LoadSheetScreen()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("SheetMenu");
+    }
+    
     public static void LoadHighscoreScreen()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("HighscoreList");
