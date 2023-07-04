@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/QuestionScreen.unity
     guid: d82fd03c882bb0b49924c25202aa3afb
+  - enabled: 1
+    path: Assets/Scenes/SheetMenu.unity
+    guid: 69bc562b17412644b8120d5e482ce010
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 9cc2c2e6b84724040914cc13bea72bbc, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: b810a5819ea5c2f47b210eea6a990e3d, type: 2}

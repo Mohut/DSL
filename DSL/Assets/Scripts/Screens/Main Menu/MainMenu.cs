@@ -8,6 +8,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button multiplayerButton;
     void OnEnable()
     {
-        multiplayerButton.onClick.AddListener(SceneManager.LoadSubjectScreen);
+        multiplayerButton.onClick.AddListener(SceneManager.LoadSheetScreen);
     }
 }

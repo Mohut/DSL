@@ -262,7 +262,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void ReadCSVFile(string sheetName)
+    public void ReadCSVFile(string sheetName)
     {
         var config = new CsvConfiguration(CultureInfo.GetCultureInfoByIetfLanguageTag("de-DE"))
         {
