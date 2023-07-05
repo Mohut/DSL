@@ -1,15 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SheetMenu : MonoBehaviour
 {
     [SerializeField] private GameObject sheetButton;
     [SerializeField] private Transform parentTransform;
+    [SerializeField] private RectTransform contentTransform;
     private void Start()
     {
         LoadSheets();
@@ -17,11 +14,16 @@ public class SheetMenu : MonoBehaviour
 
     private void LoadSheets()
     {
-        int yPosition = 0;
+        int yPosition = -100;
+        int contentSize = 150;
         
         foreach (KeyValuePair<string, string> sheetPair in DataManager.Instance.DataSheets)
         {
-            SheetButtonInterface sheetButtonInterface = Instantiate(sheetButton, new Vector3(0, yPosition, 0), quaternion.identity, parentTransform).GetComponent<SheetButtonInterface>();
+            GameObject button = Instantiate(sheetButton, new Vector3(0, yPosition, 0), quaternion.identity, parentTransform);
+            SheetButtonInterface sheetButtonInterface = button.GetComponent<SheetButtonInterface>();
+            contentTransform.sizeDelta = new Vector2(0, contentSize);
+            button.GetComponent<RectTransform>().localPosition = new Vector3(0, yPosition,0);
+            contentSize += 160;
             sheetButtonInterface.SheetName.SetText(sheetPair.Key);
             sheetButtonInterface.Button.onClick.AddListener(()=>
             {
@@ -29,7 +31,7 @@ public class SheetMenu : MonoBehaviour
                 DataManager.Instance.ReadCSVFile(sheetPair.Key);
                 SceneManager.LoadSubjectScreen();
             });
-            yPosition += 200;
+            yPosition -= 150;
         }
     }
 }

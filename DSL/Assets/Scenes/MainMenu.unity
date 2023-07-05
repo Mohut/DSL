@@ -1256,7 +1256,7 @@ MonoBehaviour:
   ui: {fileID: 865829740}
   errorMessage: {fileID: 983940473}
   inputField: {fileID: 2070472108}
-  password: "andre ist h\xFCbsch"
+  password: 
 --- !u!1 &983940473
 GameObject:
   m_ObjectHideFlags: 0
