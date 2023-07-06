@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private int _allUsedTips;
     private int _questionIteration;
     private bool _paidForHint;
+    private bool _skipLogin;
     private List<ChosenAnswer> chosenAnswers = new List<ChosenAnswer>();
     #endregion
 
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     public int AllUsedTips { get => _allUsedTips; set => _allUsedTips = value; }
     public List<ChosenAnswer> ChosenAnswers { get => chosenAnswers; set => chosenAnswers = value; }
     public List<Group> PlaysessionsGroups { get => _playsessionsGroups; set => _playsessionsGroups = value; }
+    public bool SkipLogin { get => _skipLogin; set => _skipLogin = value; }
 
     #endregion
 
