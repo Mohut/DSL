@@ -1694,6 +1694,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: DataManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.data[0]
+      value: Themenkomplexe
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.data[1]
+      value: Fragen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.data[2]
+      value: Antworten
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226247742550254886, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
+      propertyPath: sheetNames.Array.data[3]
+      value: Tipps
+      objectReference: {fileID: 0}
     - target: {fileID: 6226247742550254887, guid: 3c6fb84dece9e284995f5f0f2a99085f, type: 3}
       propertyPath: m_RootOrder
       value: 4

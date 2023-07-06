@@ -9,23 +9,20 @@ using UnityEngine;
 public class Hint
 {
     [Optional]
-    [Name("id")]
     public int id;
 
     [Optional]
-    [Name("text")]
     public string text;
 
     [Optional]
-    [Name("price")]
     public int price;
 }
 public class HintMap : ClassMap<Hint>
 {
     public HintMap()
     {
-        Map(m => m.id).Name("id");
-        Map(m => m.text).Name("text");
-        Map(m => m.price).Name("price");
+        Map(m => m.id).Name("Nummer");
+        Map(m => m.text).Name("Tipptext");
+        Map(m => m.price).Name("Preis");
     }
 }

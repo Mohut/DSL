@@ -14,39 +14,33 @@ public enum QuestionType
 [Serializable]
 public class Question
 {
-    [Name("id")]
     public int id;
 
     [Optional]
-    [Name("text")]
     public string text;
 
     [Optional]
-    [Name("type")]
     public QuestionType type;
 
     [Optional]
-    [Name("points")]
     public int points;
 
     [Optional]
-    [Name("answerId")]
     [TypeConverter(typeof(ToIntArrayConverter))]
     public List<int> answerId{ get; set; }
 
     [Optional]
-    [Name("hintId")]
     public string hintId;
 }
 public class QuestionMap : ClassMap<Question>
 {
     public QuestionMap()
     {
-        Map(m => m.id).Name("id");
-        Map(m => m.text).Name("text");
-        Map(m => m.type).Name("type").TypeConverter<QuestionTypeConverter>();
-        Map(m => m.points).Name("points");
-        Map(m => m.answerId).Name("answerId").TypeConverter<ToIntArrayConverter>();
-        Map(m => m.hintId).Name("hintId");
+        Map(m => m.id).Name("Nummer");
+        Map(m => m.text).Name("Fragetext");
+        Map(m => m.type).Name("Fragetyp").TypeConverter<QuestionTypeConverter>();
+        Map(m => m.points).Name("Punkte");
+        Map(m => m.answerId).Name("Antwortnummer").TypeConverter<ToIntArrayConverter>();
+        Map(m => m.hintId).Name("Tippnummer");
     }
 }

@@ -267,10 +267,10 @@ public class DataManager : MonoBehaviour
         var config = new CsvConfiguration(CultureInfo.GetCultureInfoByIetfLanguageTag("de-DE"))
         {
             Delimiter = ";",
-            MissingFieldFound = null,
-    };
-        Debug.Log(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Station.csv");
-        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Station.csv"))
+            MissingFieldFound = null,            
+        };
+
+        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Themenkomplexe.csv"))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<StationMap>();
@@ -282,7 +282,7 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Question.csv"))
+        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Fragen.csv"))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<QuestionMap>();
@@ -294,7 +294,7 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Answer.csv"))
+        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Antworten.csv"))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<AnswerMap>();
@@ -306,7 +306,7 @@ public class DataManager : MonoBehaviour
             }
         }
 
-        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Hint.csv"))
+        using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Tipps.csv"))
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.RegisterClassMap<HintMap>();
