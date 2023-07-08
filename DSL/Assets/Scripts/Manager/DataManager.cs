@@ -10,6 +10,8 @@ using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Drive.v3;
 using Google.Apis.Sheets.v4.Data;
+using System.Linq;
+using System.Collections;
 
 public class DataManager : MonoBehaviour
 {
@@ -262,12 +264,31 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    bool ShouldSkipHandler(ShouldSkipRecordArgs args)
+    {
+        for (int i = 0; i < args.Row.Parser.Record.Length; i++)
+        {
+            if(i < 5)
+            {
+                if (String.IsNullOrEmpty(args.Row.Parser.Record[i]))
+                {
+                    Debug.LogError("Found faulty record. Skipped entire row.");
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
     public void ReadCSVFile(string sheetName)
     {
         var config = new CsvConfiguration(CultureInfo.GetCultureInfoByIetfLanguageTag("de-DE"))
         {
             Delimiter = ";",
-            MissingFieldFound = null,            
+            MissingFieldFound = null,
+            ShouldSkipRecord = ShouldSkipHandler
         };
 
         using (var reader = new StreamReader(Application.persistentDataPath + Path.DirectorySeparatorChar + sheetName + "_" + "Themenkomplexe.csv"))
@@ -275,7 +296,7 @@ public class DataManager : MonoBehaviour
         {
             csv.Context.RegisterClassMap<StationMap>();
             var records = csv.GetRecords<Station>();
-
+            
             foreach (var item in records)
             {
                 Stations.Add(item);
@@ -337,7 +358,19 @@ public class DataManager : MonoBehaviour
     #region Get Data Functions
     public Question GetQuestionById(int id)
     {
-        return Questions.Find(x => x.id == id);
+        Question question = Questions.Find(x => x.id == id);
+
+        for (int i = id; i < Questions.Count; i++)
+        {
+            question = Questions.Find(x => x.id == i);
+
+            if(question != null)
+            {
+                break;
+            }
+        }
+
+        return question;
     }
 
     public List<Answer> GetAnswersById(List<int> idList)
@@ -358,6 +391,14 @@ public class DataManager : MonoBehaviour
     public Hint GetHintById(int id)
     {
         return Hints.Find(x => x.id == id);
+    }
+
+    public void ClearData()
+    {
+        Stations.Clear();
+        Questions.Clear();
+        Answers.Clear();
+        Hints.Clear();
     }
     #endregion
 

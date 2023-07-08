@@ -8,13 +8,10 @@ using UnityEngine;
 [Serializable]
 public class Hint
 {
-    [Optional]
     public int id;
 
-    [Optional]
     public string text;
 
-    [Optional]
     public int price;
 }
 public class HintMap : ClassMap<Hint>

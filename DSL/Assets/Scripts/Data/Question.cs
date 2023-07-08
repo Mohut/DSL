@@ -16,20 +16,15 @@ public class Question
 {
     public int id;
 
-    [Optional]
     public string text;
 
-    [Optional]
     public QuestionType type;
 
-    [Optional]
     public int points;
 
-    [Optional]
     [TypeConverter(typeof(ToIntArrayConverter))]
     public List<int> answerId{ get; set; }
 
-    [Optional]
     public string hintId;
 }
 public class QuestionMap : ClassMap<Question>

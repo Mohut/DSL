@@ -27,7 +27,7 @@ public class SheetMenu : MonoBehaviour
             sheetButtonInterface.SheetName.SetText(sheetPair.Key);
             sheetButtonInterface.Button.onClick.AddListener(()=>
             {
-                DataManager.Instance.Stations.Clear();
+                DataManager.Instance.ClearData();
                 DataManager.Instance.ReadCSVFile(sheetPair.Key);
                 SceneManager.LoadSubjectScreen();
             });
